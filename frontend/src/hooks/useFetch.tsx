@@ -1,0 +1,68 @@
+import axios from "axios";
+import { ENDPOINT_CAROUSEL } from "../config";
+
+export default function useAxiosSendData() {
+    const sendData =  async (url:string,data:unknown ,token:string)=>{
+        try{
+          const response = await axios.post(ENDPOINT_CAROUSEL, data,
+              {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                  'token':token
+                },
+              }
+          );
+          return response.data;
+        }catch(err){
+          console.log(err);
+        }
+    }
+    return {sendData};
+  }
+
+export  function useAxiosGetData(){
+   const getData = async(url:string,token:string)=>{
+      try{
+        const response = await fetch(url,{method:'GET', headers: {'Content-Type': 'application/json' , 'token':token}});
+        const data =  await response.json();
+        return data;
+      }catch(err){
+        console.log(err)
+      }
+   }
+   return {getData};
+} 
+
+
+export function useAxiosDeleteData(){
+   const deleteData = async(url:string,token:string)=>{
+      try{
+        const response = await fetch(url,{method:'DELETE', headers: {'Content-Type': 'application/json' , 'token':token}});
+        const data =  await response.json();
+        return data;
+      }catch(err){
+        console.log(err)
+      }
+   }
+   return {deleteData};
+}
+
+
+export function useAxiosUpdateData(){
+  const updatedData =  async (url:string,data:unknown ,token:string)=>{
+    try{
+      const response = await axios.put(ENDPOINT_CAROUSEL, data,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'token':token
+            },
+          }
+      );
+      return response.data;
+    }catch(err){
+      console.log(err);
+    }
+}
+return {updatedData};
+}

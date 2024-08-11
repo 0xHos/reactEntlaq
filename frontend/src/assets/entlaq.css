@@ -1,0 +1,10 @@
+.swiper-pagination-bullet {
+    width: 15px;  /* Set your desired width */
+    height: 15px; /* Set your desired height */
+    background-color: rgba(66, 66, 67, 0.308); /* Custom bullet color */
+    opacity: 1;
+  }
+  
+  .swiper-pagination-bullet-active {
+    background-color: #007aff; /* Custom active bullet color */
+  }
