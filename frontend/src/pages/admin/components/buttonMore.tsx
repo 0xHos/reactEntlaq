@@ -3,11 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useAxiosDeleteData } from "../../../hooks/useFetch";
 import { ENDPOINT_CAROUSEL } from "../../../config";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function ButtonMore(props:{id:number}){
+export default function ButtonMore(props:{page:string,section:string,id:string}){
 
     const [isOpen,setIsOpen] = useState(false);
     const {deleteData} = useAxiosDeleteData();
+    const navigate = useNavigate();
     
     const handelOpen = ()=>{
         setIsOpen(!isOpen);
@@ -31,7 +33,9 @@ export default function ButtonMore(props:{id:number}){
     }
 
     const handelUpdate = ()=>{
-        const updateEndpoint = `${ENDPOINT_CAROUSEL}/${props.id}`;
+        // const updateEndpoint = `${ENDPOINT_CAROUSEL}/${props.id}`;
+        // const token = sessionStorage.getItem("token")||'';
+        navigate(`admin/update/${props?.id}`)
 
     }
 
@@ -40,12 +44,11 @@ export default function ButtonMore(props:{id:number}){
 
     return(
         <>
-         <td onClick={handelOpen}><FontAwesomeIcon icon={faEllipsisH} className="text-2xl hover:cursor-pointer relative"/>
-            {isOpen?<div className="bg-white shadow-lg border-2 rounded-lg absolute right-10 flex flex-col p-4 z-10">
-                    <button onClick={handleDelete} className="text-red-500 hover:text-red-700 px-2 py-1"><FontAwesomeIcon icon={faTrash} className="text-2xl"/> Delete</button>
-                    {/* <hr/> */}
-                    {/* <button onClick={handelUpdate} className="text-blue-800 hover:text-blue-700 px-2 py-1"><FontAwesomeIcon icon={faEdit} className="text-2xl"/> Edit</button> */}
-            </div> :null}                            
+         <td >
+            <div className="">
+                    <button onClick={handleDelete} className="inline text-red-500 hover:text-red-700 px-2 py-1"> Delete</button>|
+                    <Link  className="inline text-blue-800 hover:text-blue-700 px-2 py-1" to={`/admin/dashboard/update/${props?.page}/${props?.section}/${props?.id}`}> Edit</Link>
+            </div>                            
          </td>
             
         </>

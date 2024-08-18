@@ -9,6 +9,7 @@ import Media from "../pages/visitors/pages/media";
 import Advisory from "../pages/visitors/pages/advisory";
 import Programs from "../pages/visitors/pages/programs";
 import Report from "../pages/visitors/pages/report";
+import Contact from "../pages/visitors/pages/contact_us";
 
 
 
@@ -24,7 +25,9 @@ export function VisitorRoutes(){
                     <Route path="/Media-Center"  element={<Media/>}/>
                     <Route path="/Advisory"  element={<Advisory/>}/>
                     <Route path="/Programs"  element={<Programs/>}/>
-                    <Route path="/Report"  element={<Report/>}/>
+                    <Route path="/Report/:id"  element={<Report/>}/>
+                    <Route path="/Contact-us"  element={<Contact/>}/>
+
                 </Route>
                 
             </Routes>

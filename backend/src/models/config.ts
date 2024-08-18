@@ -90,6 +90,8 @@ const createCarouselTable = () => {
       CREATE TABLE IF NOT EXISTS gallery (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         car_img TEXT,
+        section TEXT,
+        link TEXT,
         id_car INTEGER,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (id_car) REFERENCES carousels(id)

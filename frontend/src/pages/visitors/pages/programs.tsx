@@ -5,52 +5,53 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useAxiosGetData } from "../../../hooks/useFetch";
 import { BACKEND_SERVER, ENDPOINT_CAROUSEL } from "../../../config";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { faAngleDoubleRight, faArrowCircleLeft, faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
- 
+import { faChevronCircleLeft, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
+import AOS from 'aos';
+
 function CarouselHeader(){
-    const init:Carousel[] = []
-    const [carousel,setCarousel] = useState(init);
-    const {getData} = useAxiosGetData();
-    useEffect(()=>{
-        getData(`${ENDPOINT_CAROUSEL}/programs/header`,'').then((res:Carousel[])=>{
-            setCarousel(res);
-        });
-    },[]);
+  const init:Carousel[] = []
+  const [carousel,setCarousel] = useState(init);
+  const {getData} = useAxiosGetData();
+  useEffect(()=>{
+      getData(`${ENDPOINT_CAROUSEL}/programs/header`,'').then((res:Carousel[])=>{
+          setCarousel(res);
+      });
+  },[]);
 
-    return(
-        <>
-        <Swiper 
-        className={`h-full relative` } 
-        direction='vertical' 
-        autoplay={{delay: 2000,disableOnInteraction: false, }}
-        modules={[Autoplay, Navigation, Pagination]}  
-        pagination={{
-            el:".swiper-pagination",
-            
-        }} 
-        navigation={{
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      }}>
-        {
-                    carousel?.map(
-                        (c:Carousel,index:number)=>(
-                                <SwiperSlide key={index + 10}>
-                                    <img className={`z-0 absolute object-cover w-full h-full'`} src={`${BACKEND_SERVER}/uploads/${c.car_img}`}/>
-                                    <div className={`h-full bg-custom-black relative`}></div>
-                                    <p className="w-full absolute bottom-32 text-2xl md:text-2xl text-center text-white  font-bold md:font-extrabold">{c.car_title}</p>
-                                    <a className="absolute bottom-4 left-[44%] py-4  px-16 z-10 bg-customColor-blue rounded-full w-fit text-lg  car_link font-bold text-white  hover:border-2 hover:border-customColor-blue hover:bg-transparent transform transition-transform duration-200 ease-in-out hover:-translate-y-0.5  hover:cursor-pointer" href={`${c.car_link}`}>learn more</a>
-                                </SwiperSlide>
+  return(
+      <>
+      <Swiper 
+      className={`h-full relative` } 
+      direction='vertical' 
+      autoplay={{delay: 2000,disableOnInteraction: false, }}
+      modules={[Autoplay, Navigation, Pagination]}  
+      pagination={{
+          el:".swiper-pagination",
+          
+      }} 
+      navigation={{
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    }}>
+      {
+                  carousel?.map(
+                      (c:Carousel,index:number)=>(
+                              <SwiperSlide key={index + 10}>
+                                  <img className={`z-0 absolute object-cover w-full h-[100%]`} src={`${BACKEND_SERVER}/uploads/${c.car_img}`}/>
+                                  <div className={`h-full bg-custom-black relative`}></div>
+                                  <p className="px-40 md:px-60 w-full absolute bottom-32 text-2xl md:text-2xl text-center text-white  font-bold md:font-extrabold">{c.car_title}</p>
+                                  <a className="absolute bottom-4 left-[35%] md:left-[41%] py-4  px-16 z-10 bg-customColor-blue rounded-full w-fit text-lg  car_link font-bold text-white  hover:border-2 hover:border-customColor-blue hover:bg-transparent transform transition-transform duration-200 ease-in-out hover:-translate-y-0.5  hover:cursor-pointer" href={`${c.car_link}`}>learn more</a>
+                              </SwiperSlide>
 
-                    )
-                    )
-                }
-                <div className="swiper-pagination" style={{right:'3%'}}></div>
-                <div className="swiper-button-next absolute bottom-28 right-16 z-10"><FontAwesomeIcon size='2x' className='text-[#1010118a]' icon={faArrowCircleLeft}/></div>
-                <div className="swiper-button-prev absolute bottom-28 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-[#1010118a]' icon={faArrowCircleRight}/></div>
-        </Swiper>
-        </>
-    );
+                  )
+                  )
+              }
+              <div className="swiper-pagination" style={{right:'3%'}}></div>
+              <div className="swiper-button-next absolute bottom-28 right-16 z-10"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
+              <div className="swiper-button-prev absolute bottom-28 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
+      </Swiper>
+      </>
+  );
 }
 
 function CapacityBuildingPrograms(){
@@ -276,11 +277,12 @@ function StepperResearchProducts(){
 
     return(<>
            <div className='flex flex-col w-full relative  my-10 '>
-              <p className="text-customColor-blue  text-2xl md:text-4xl text-center font-extrabold p-12 wow animate__animated animate__slideInUp">Research Products</p>
+              <p className="text-customColor-blue  text-2xl md:text-4xl text-center font-extrabold p-12 wow animate__animated animate__slideInUp">Available & Ongoing Programs</p>
               <div className=' flex flex-col'>
         <Swiper
           className='w-full'
           effect="coverflow"
+          loop={true}
           coverflowEffect={{
             rotate: 50,
             stretch: 0,
@@ -291,6 +293,16 @@ function StepperResearchProducts(){
           slidesPerView={2}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+          }}
+          breakpoints={{
+            // when window width is >= 640px (phone)
+            500: {
+              slidesPerView: 1,
+            },
+            // when window width is >= 768px (tablet)
+            768: {
+              slidesPerView: 2,
+            },
           }}
 
         >
@@ -324,10 +336,10 @@ function StepperResearchProducts(){
           </div>
           <div className='space-x-3'>
             <button onClick={handelRadioClickRight}>
-              <FontAwesomeIcon className='text-slate-100' size='2x' icon={faArrowCircleLeft} />
+              <FontAwesomeIcon className='text-slate-400' size='2x' icon={faChevronCircleLeft} />
             </button>
             <button onClick={handelRadioClickLeft}>
-              <FontAwesomeIcon className='text-slate-100' size='2x' icon={faArrowCircleRight} />
+              <FontAwesomeIcon className='text-slate-400' size='2x' icon={faChevronCircleRight} />
             </button>
           </div>
         </div>
@@ -347,8 +359,8 @@ function OurAdvisoryClients(){
       },[]);
       return(
           <>
-              <div className='flex flex-col w-2/4 relative left-1/4 my-10'>
-              <p className="text-customColor-blue  text-2xl md:text-4xl text-center font-extrabold p-12 wow animate__animated animate__slideInUp">Our Advisory Clients</p>
+              <div className='flex flex-col w-2/4 relative left-1/4 my-10' data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000"              >
+              <p className="text-customColor-blue  text-2xl md:text-4xl text-center font-extrabold p-12 wow animate__animated animate__slideInUp">Meet Our Programs’ Partners</p>
 
               </div>
               <Swiper
@@ -365,7 +377,7 @@ function OurAdvisoryClients(){
                      {
                         carousel?.map((car)=>(
                           <SwiperSlide>
-                              <img className='size-52' src={`${BACKEND_SERVER}/uploads/${car?.car_img}`}/>
+                              <img className='size-40 md:size-52' src={`${BACKEND_SERVER}/uploads/${car?.car_img}`}/>
                           </SwiperSlide>
                         ))
                       }
@@ -380,14 +392,14 @@ function ValueAddedPartners(){
 
     return (
         <>
-        <div id="Value_Added_Partners" className="wow animate__animated animate__slideInUp"  data-wow-delay="0.5s" data-wow-duration="2s">
+        <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000"  id="Value_Added_Partners" >
         <p className="text-center bg-blue-950 text-white font-extrabold text-2xl md:text-3xl p-10">Value Added <span className="text-green-300">Partners</span><br/>Over EGP <span className="text-amber-200">1,000,000</span> in Perks</p>
         <div className="flex flex-row flex-wrap items-center justify-center wow animate__animated animate__slideInUp"  data-wow-delay="0.5s" data-wow-duration="2s">
                {images.map(i => (
               <div key={i} className="w-1/5">
                 <img
                   src={`/img/programs/partners/Value_added_partners-0${i}.png`}
-                  className="w-60"
+                  className="w-40 md:w-60"
                   alt={`Partner ${i}`}
                 />
               </div>
@@ -401,14 +413,21 @@ function ValueAddedPartners(){
  
 
 export default function Programs(){
+  useEffect(() => {
+    AOS.init({
+      duration: 1200, // Animation duration in milliseconds
+      once: true,     // Whether animation should happen only once while scrolling down
+    });
+  }, []);
+ 
     return(
         <>
              {/* Header */}
              <section className='flex h-[88vh]'>
-                <div className='w-1/3 h-full bg-customColor-blue flex items-center justify-center'>
-                    <h1 className='text-white font-extrabold  text-3xl lg:text-4xl  text-center'>“Pushing the boundries<br/>of Egypt’s <span className="text-customColor-green">innovation</span>”</h1>
+             <div className='hidden md:flex w-1/3 h-full bg-customColor-blue flex items-center justify-center '>
+                  <h1 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000" className='text-white font-extrabold  text-3xl lg:text-4xl  text-center'>“Pushing the boundries<br/>of Egypt’s <span className="text-customColor-green">innovation</span>”</h1>
                 </div>
-                <div className='w-2/3'>
+                 <div data-aos="fade-left" data-aos-duration="1000" className='w-full md:w-2/3'>
                      <CarouselHeader />
                 </div>
             </section>

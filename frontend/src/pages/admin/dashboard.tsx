@@ -19,7 +19,7 @@ export default function Dashboard(){
                             <SideNav />
                     </section>
                     <section className="w-10/12 p-5 bg-slate-100 h-screen overflow-y-auto">
-                        <section className="h-screen overflow-hidden">
+                        <section className="h-screen">
                                 <Outlet />
                         </section>
                     </section>

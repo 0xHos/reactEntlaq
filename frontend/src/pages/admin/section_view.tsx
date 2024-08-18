@@ -19,40 +19,39 @@ export default  function SectionView(){
         getData(endpoint,token).then((res:Carousel[])=>{
             setData(res);
         });
-    },[page, section, getData, token, endpoint]);
+    },[page, section]);
        
-    
     return(
 
 
         <>
-        <div className=" h-screen overflow-y-auto">
-            <table className="w-full " >
+        <div className=" h-screen overflow-y-auto container mx-auto p-4">
+            <table className="w-full min-w-full bg-white border border-gray-300 " >
                    <thead>
                         <tr className="font-extrabold text-gray-500 h-20">
-                                {table_header.car_img != null?<th className="w-1/12">Image</th>:null}
-                                {table_header.car_title != null?<th  className="text-start w-2/12">Title</th>:null}
-                                {table_header.car_content != null?<th  className="text-start">Content</th>:null}
-                                {table_header.car_link != null?<th className="text-start">Link</th>:null}
-                                {table_header.car_link_text != null?<th  className="text-start">Link Text</th>:null}
-                                {table_header.car_name != null?<th  className="text-start">Name</th>:null}
-                                {table_header.car_job != null?<th  className="text-start">Description</th>:null}
-                                <th  className="text-start w-1/12">Action</th>
+                                {table_header.car_img != null?<th className="w-1/12 px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Image</th>:null}
+                                {table_header.car_title != null?<th  className="text-start w-2/12 px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Title</th>:null}
+                                {table_header.car_content != null?<th  className="text-start px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Content</th>:null}
+                                {table_header.car_link != null?<th className="text-start px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Link</th>:null}
+                                {table_header.car_link_text != null?<th  className="text-start px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Link Text</th>:null}
+                                {table_header.car_name != null?<th  className="text-start px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>:null}
+                                {table_header.car_job != null?<th  className="text-start px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Description</th>:null}
+                                <th  className="text-start w-2/12 px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Action</th>
                             </tr>
                    </thead>
                 <tbody className="">
                     {
                         data?.map((carousel:Carousel,index:number)=>{
                             return(
-                                <tr className="bg-white  border-b" key={index}>
-                                    {carousel.car_img != null ?<td><img className="size-24 rounded-full p-4" src={`${BACKEND_SERVER}/uploads/${carousel.car_img}`}/></td>:null}
-                                    {carousel.car_title != null ?<td>{carousel.car_title.substring(0,20)}</td>:null}
-                                    {carousel.car_content != null ?<td>{carousel.car_content.substring(0,30)}</td>:null}
-                                    {carousel.car_link != null ?<td>{carousel.car_link.substring(0,30)}</td>:null}
-                                    {carousel.car_link_text != null ?<td>{carousel.car_link_text.substring(0,30)}</td>:null}
-                                    {carousel.car_name != null ?<td>{carousel.car_name.substring(0,30)}</td>:null}
-                                    {carousel.car_job != null ?<td>{carousel.car_job.substring(0,30)}</td>:null}
-                                   <ButtonMore id={carousel.id}/>
+                                <tr className="bg-white  border-b hover:bg-gray-100" key={index}>
+                                    {carousel.car_img != null ?<td className=" py-4 border-b border-gray-200 text-sm"><img className="size-24 rounded-full p-4" src={`${BACKEND_SERVER}/uploads/${carousel.car_img}`}/></td>:null}
+                                    {carousel.car_title != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_title.substring(0,20)}</td>:null}
+                                    {carousel.car_content != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_content.substring(0,30)}</td>:null}
+                                    {carousel.car_link != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_link.substring(0,30)}</td>:null}
+                                    {carousel.car_link_text != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_link_text.substring(0,30)}</td>:null}
+                                    {carousel.car_name != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_name.substring(0,30)}</td>:null}
+                                    {carousel.car_job != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_job.substring(0,30)}</td>:null}
+                                   <ButtonMore page={carousel?.page} section={carousel?.section}  id={carousel?.id}/>
                                 </tr>
                             );
                         })

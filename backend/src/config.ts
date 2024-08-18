@@ -1,8 +1,8 @@
 import path from 'path';
 
 
-const UPLOAD_PATH = process.env.UPLOAD_PATH || 'uploads';
-const DATABASE_NAME = process.env.SQLITE_PATH || 'entlaq.db';
+const UPLOAD_PATH = process?.env.UPLOAD_PATH || 'uploads';
+const DATABASE_NAME = process?.env.SQLITE_PATH || 'entlaq.db';
 
 export const PORT = process.env.PORT || 8080;
 export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "12345hashsadhahf;ah";

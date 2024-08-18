@@ -7,6 +7,7 @@ import Messages from "../pages/admin/pages/messages";
 import AddCarousel from "../pages/admin/pages/add_carousel";
 import SectionView from "../pages/admin/section_view";
 import AddReport from "../pages/admin/pages/add_report";
+import Update from "../pages/admin/pages/update";
 
 export function AdminRoutes(){
 
@@ -20,6 +21,8 @@ export function AdminRoutes(){
                     <Route path="messages" element={<Messages/>}/>
                     <Route path="add_in_section" element={<AddCarousel/>}/>
                     <Route path="view/:page/:section" element={<SectionView/>}/>
+                    <Route path="update/:page/:section/:id" element={<Update/>}/>
+
                 </Route>
                 
             </Routes>

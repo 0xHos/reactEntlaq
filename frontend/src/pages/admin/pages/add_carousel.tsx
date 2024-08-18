@@ -1,10 +1,13 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { ENDPOINT_CAROUSEL } from "../../../config";
 import { Carousel } from "../../../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { PageOptionDropdown, SectionOptionDropdown } from "../data";
 import useAxiosSendData from "../../../hooks/useFetch";
+
+import JoditEditor from 'jodit-react';
+
 
 
 export default function AddCarousel() {
@@ -14,6 +17,12 @@ export default function AddCarousel() {
   const [pageChoosed, setPageChoosed] = useState("");
   const [sectionChoosed, setSectionChoosed] = useState("");
   const [file, setFile] = useState(null);
+  const refI = useRef([])
+
+
+
+
+
 
 
   const handelChangePage = (event:React.ChangeEvent<HTMLSelectElement>)=>{
@@ -28,13 +37,18 @@ export default function AddCarousel() {
 
   }
 
-  const handleInput = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (event) => {
+    
     setCarousel((prev: Carousel) =>  ({...prev, [event.target.name]: event.target.value}));
+
 };
 
  const handelFile = (event)=>{
   setFile(event.target.files[0])
  };
+ const handleFileChange = (files) => {
+  setCarousel((prevData) => ({...prevData,files}));
+};
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -53,6 +67,7 @@ export default function AddCarousel() {
     }
   };
 
+  console.log(refI)
   return (
     <>
      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -79,10 +94,43 @@ export default function AddCarousel() {
                                    {SectionOptionDropdown[pageChoosed]?.map((e)=><option key={e.show_name+e.value} value={e.value}>{e.show_name}</option>)}
                                </select>
                                </div>
-                                   {SectionOptionDropdown[pageChoosed]?.filter((e)=>e.value == sectionChoosed)[0]?.input?.map((e)=>
-                                       <input onBlur={handleInput}  type={e.type} name={e.name} placeholder={e.show_name} key={e.show_name+e.value} className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" required></input>
+                                   {SectionOptionDropdown[pageChoosed]?.filter((e)=>e.value == sectionChoosed)[0]?.input?.map((ei,i)=>
+                                      <>
+                                       {
+                                        <>
+                                        <h1> {ei.show_name}</h1>
+                                        {
+                                          
+                                          ei.name == "car_link"?
+                                          <input
+                                            onBlur={handleInput} 
+                                            type={ei.type}
+                                            name={ei.name}
+                                            placeholder={ei.show_name} 
+                                            key={ei.show_name+ei.value} 
+                                            className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" required></input> 
+
+                                          :<JoditEditor
+                                          ref={ element => refI.current[i] = element }
+                                          value={ei.value}
+                                          name={ei.name}
+                                          onChange={(ex) =>{
+                                            console.log(refI.current[i]);
+                                            console.log(ex);
+                                            setCarousel((prev: Carousel) =>  ({...prev, [ei.name]:ex}))}}
+                                       />
+                                        }
+                                       <hr className="bg-blue-800"/>
+                                        </>
+                                       }
+
+                                      </>
                                    ) || null}
-                               <input type="file" onChange={handelFile} name="car_img"/>
+                               {
+                                  sectionChoosed == 'about_us'?null 
+                                  :<input type="file" onChange={handelFile} name="car_img"/>                                    
+                               }
+                              
 
                                <button type="submit" className="w-full text-white bg-blue-800 p-5 mt-5 rounded-lg">
                                Add <FontAwesomeIcon icon={faAdd}/>

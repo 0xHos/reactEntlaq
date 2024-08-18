@@ -12,10 +12,6 @@ export const  PageOptionDropdown = [
       value: 'media_center',
     },
     {
-      show_name: 'About us',
-      value: 'about_us',
-    },
-    {
       show_name: 'Projects',
       value: 'projects',
     },
@@ -27,6 +23,10 @@ export const  PageOptionDropdown = [
       show_name: 'Programs',
       value: 'programs',
     },
+    {
+      show_name: 'About Us',
+        value: 'about_us',
+    }
   ];
 
  export const SectionOptionDropdown = {
@@ -56,32 +56,32 @@ export const  PageOptionDropdown = [
   
           ]
       },
-      {
-        show_name: 'About Us',
-        value: 'about_us',
-        input:[
+      // {
+      //   show_name: 'About Us',
+      //   value: 'about_us',
+      //   input:[
              
-              {
-                type:'text',
-                name:'car_title',
-                show_name:'Title'
+      //         {
+      //           type:'text',
+      //           name:'car_title',
+      //           show_name:'Title'
   
-              },
-              {
-                type:'text',
-                name:'car_content',
-                show_name:'Content'
+      //         },
+      //         {
+      //           type:'text',
+      //           name:'car_content',
+      //           show_name:'Content'
   
-              },
-              {
-                type:'text',
-                name:'car_link',
-                show_name:'Link'
+      //         },
+      //         {
+      //           type:'text',
+      //           name:'car_link',
+      //           show_name:'Link'
   
-              },
+      //         },
   
-          ]
-      },
+      //     ]
+      // },
       {
         show_name: 'Our Services',
         value: 'our_services',

@@ -3,7 +3,7 @@ export interface Carousel{
     id?:number;
     page:string;
     section:string;
-    car_img:string;
+    car_img?:string;
     car_title?:string;
     car_content?:string;
     car_link?:string;
@@ -34,6 +34,8 @@ export interface Gallery{
 
     id? :number;
     car_img: string;
+    section?: string;
+    link?: string;
     id_car: number;
     
 }

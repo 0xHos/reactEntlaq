@@ -1,7 +1,10 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
+import { Carousel } from "../../../types";
+import { useAxiosGetData } from "../../../hooks/useFetch";
+import { ENDPOINT_CAROUSEL } from "../../../config";
 
 
 
@@ -11,8 +14,20 @@ export function Navbar(){
     const [ent_prog_IsOpen,setEnt_prog_IsOpen] = useState(false);
     const [ent_proj_IsOpen,setEnt_proj_IsOpen] = useState(false);
     const [ent_media_IsOpen,setEnt_media_IsOpen] = useState(false);
+    const [reports, setReports] = useState<Carousel[]>([]);
+    const { getData } = useAxiosGetData();
 
     const styleMenuInMenu = "pl-4 text-sm font-normal mb-4";
+
+
+    const fetchData = async () => {
+        const res = await getData(`${ENDPOINT_CAROUSEL}/report/header`, '');
+        setReports(res);
+      };
+    
+      useEffect(() => {
+        fetchData();
+      }, []);
 
     const handleClickMenuIsOpen = ()=>{
         setMenuIsOpen(!menuIsOpen);
@@ -33,7 +48,7 @@ export function Navbar(){
                 <button onClick={handleClickMenuIsOpen} className="text-blue-900"><FontAwesomeIcon icon={faBars}/></button>
             </div>
             <div className="flex">
-                <a href="/"><img src="img/logo.svg" className="h-12" alt="Logo"/></a>
+                <a href="/"><img src="/img/logo.svg" className="h-12" alt="Logo"/></a>
             </div>
             <div className="md:flex">
                 <a href="/Contact-Us" className="text-blue-900 hidden md:block">Contact Us</a>
@@ -61,7 +76,14 @@ export function Navbar(){
                                 {
                                     ent_proj_IsOpen?
                                             <ul className="">
-                                                <li className={styleMenuInMenu}><a href="/Research-Products">Research Products</a></li>
+                                                <li className= {`${styleMenuInMenu} `}><a href="/Research-Products" className="font-extrabold">Research Products</a></li>
+                                                {
+                                                    reports?.map(car=>(
+                                                        <>
+                                                         <li className={styleMenuInMenu}><a className="text-sm font-normal" href={`/Report/${car?.id}`}>{car?.car_title}</a></li>
+                                                        </>
+                                                    ))
+                                                }
                                             </ul>
                                     :null
                                 }

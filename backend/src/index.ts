@@ -8,7 +8,8 @@ import { PORT, uploadPath } from "./config";
 import fs from 'fs';
 import { userRouter } from "./routers/user.router";
 import { fetchCountPagination } from "./controllers/carousel.controller";
-
+import { galleryRouter } from "./routers/gallery.router";
+import { messageRouter } from "./routers/message.router";
 
 
 
@@ -33,6 +34,10 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.get('/api/count/:page/:section', fetchCountPagination)
 app.use('/api/carousels',carouselRouter);
 app.use("/api/users" , userRouter);
+app.use("/api/gallery" , galleryRouter);
+app.use("/api/messages" , messageRouter);
+
+
 
 
 
@@ -52,10 +57,14 @@ function createUploadFolder(){
   });
 }
 
+
+
+// this function to insert important info like admin and the data must be one data
+
+
 // run server and create database;
 app.listen(PORT , ()=>{
     console.log(`Server is running on port ${PORT}`);
     initSqlite();
     createUploadFolder();
-
 })

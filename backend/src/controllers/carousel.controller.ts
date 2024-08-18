@@ -12,8 +12,7 @@ async function addCarousel(req:Request,res:Response){
     let carousel = req.body as Carousel;
 
     let multerRequest = req as (typeof req & {file?:{filename:string}});
-    carousel.car_img =  `${multerRequest.file?.filename || undefined}` || '';
-    console.log(carousel.car_img);
+    carousel.car_img =  multerRequest.file?.filename;
 
     try{
 

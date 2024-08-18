@@ -134,8 +134,10 @@ export const deleteCarouselById = (id: number): Promise<void> => {
       const carImg = row.car_img;
 
       try {
-        await fs.unlink(`${uploadPath}/${carImg}`);
-        console.log(`Image file ${carImg} deleted successfully`);
+        if(carImg){
+          await fs.unlink(`${uploadPath}/${carImg}`);
+          console.log(`Image file ${carImg} deleted successfully`);
+        }
 
         const deleteQuery = `
         DELETE FROM "carousels" WHERE "id"=?`;
@@ -152,19 +154,6 @@ export const deleteCarouselById = (id: number): Promise<void> => {
     });
   });
 }
-// export const deleteCarouselById= (id:number):Promise<void> =>{
-//   return new Promise((resolve, reject) => {
-//     const query = `
-//     DELETE FROM "carousels" WHERE "id"=?`;
-//     db.run(query, [id], (err) => {
-//       if (err) {
-//         return reject(`Error Deleteing carousels: ${err.message}`);
-//       }
-//       console.log(`done Deleteing carosuel`);
-//       resolve();
-//     });
-//   });
-// }
 
 
 export const pagination = (page:string,section:string,limit:number,offset:number):Promise<Carousel[]>=>{
@@ -310,12 +299,14 @@ export const getUserByUsername = (username:string): Promise<User> => {
 export const insertGallery = (gallery:Gallery):Promise<boolean>=>{
   const query = `INSERT INTO gallery (
                                car_img,
-                               id_car
+                               id_car,
+                               section,
+                               link
                               )
-                                VALUES (?, ?)`;
+                                VALUES (? ,? ,? ,?)`;
   
   return new Promise((resolve,reject)=>{
-      db.run(query, [gallery.car_img,gallery.id_car], function (err) {
+      db.run(query, [gallery.car_img,gallery.id_car,gallery.section,gallery.link], function (err) {
         if(err){
           console.log(`Error inserting Gallery: ${err.message}`);
           return reject(false);

@@ -34,8 +34,17 @@ import { AdminContext } from "../../../context/adminContext";
                         isOpen && (
                           <div className="flex flex-col items-start pl-4 ">
                             {props.sections.map((sec, index:number) => (
-                              <Link to={`view/${props.pageValue}/${sec.value}`}  className="font-medium text-customColor-green my-1 p-2" key={index}>{sec.show_name}</Link>
+                                <>
+                                    <Link to={`view/${props.pageValue}/${sec.value}`}  className="font-medium text-customColor-green my-1 p-2" key={index}>{sec.show_name}</Link>                            
+                                </>
                             ))}
+                             {props.pageValue == 'home'?<Link to={`view/home/about_us`}  className="font-medium text-customColor-green my-1 p-2" >About US</Link>:null}
+                             {props.pageValue == 'home'?<Link to={`view/home/our_services_link`}  className="font-medium text-customColor-green my-1 p-2" >Entlaq Advisory Link</Link>:null}
+                             {props.pageValue == 'home'?<Link to={`view/home/our_services_link_2`}  className="font-medium text-customColor-green my-1 p-2" >Our Services Entlaq Programs Link</Link>:null}
+                             {props.pageValue == 'home'?<Link to={`view/home/partner_text`}  className="font-medium text-customColor-green my-1 p-2" >Entlaq Partners Overview</Link>:null}
+
+
+
                           </div>
                         )
                   }

@@ -1,10 +1,11 @@
 import axios from "axios";
 import { ENDPOINT_CAROUSEL } from "../config";
+import { useState } from "react";
 
 export default function useAxiosSendData() {
     const sendData =  async (url:string,data:unknown ,token:string)=>{
         try{
-          const response = await axios.post(ENDPOINT_CAROUSEL, data,
+          const response = await axios.post(url, data,
               {
                 headers: {
                   'Content-Type': 'multipart/form-data',
@@ -20,17 +21,25 @@ export default function useAxiosSendData() {
     return {sendData};
   }
 
+
+
+
+
+  
 export  function useAxiosGetData(){
+  const [loading ,setLoading] = useState(false)
    const getData = async(url:string,token:string)=>{
       try{
+        setLoading(true);
         const response = await fetch(url,{method:'GET', headers: {'Content-Type': 'application/json' , 'token':token}});
         const data =  await response.json();
+        setLoading(false);
         return data;
       }catch(err){
         console.log(err)
       }
    }
-   return {getData};
+   return {getData,loading};
 } 
 
 

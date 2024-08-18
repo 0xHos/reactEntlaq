@@ -1,4 +1,3 @@
-import ButtonCGM from "../pages/admin/button_CGM";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface Admin{
@@ -37,5 +36,24 @@ export interface Carousel{
     car_link_text?:string;
     car_name?:string;
     car_job?:string;
+
+}
+
+
+export interface RportOrGallery{
+
+    id? :number;
+    car_img: string;
+    section?: string;
+    link?: string;
+    id_car: number;
+}
+
+export interface Message{
+    id?:number;
+    name:string;
+    email:string;
+    subject:string;
+    message:string;
 
 }
