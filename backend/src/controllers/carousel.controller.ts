@@ -115,6 +115,20 @@ async function updateCarousel(req:Request,res:Response) {
     }
     try{
 
+        console.log(carousel);
+        carousel.car_title = carousel.car_title == "null" ?null:carousel.car_title
+        carousel.car_content = carousel.car_content == "null" ? null:carousel.car_content
+
+        carousel.car_link = carousel.car_link == "null" ? null:carousel.car_link
+        carousel.car_link_text = carousel.car_link_text == "null" ?null:carousel.car_link_text
+        
+        carousel.car_job = carousel.car_job == "null" ?null:carousel.car_job
+        carousel.car_name = carousel.car_name == "null" ?null:carousel.car_name
+
+        carousel.car_img = carousel.car_img == "null" ?null:carousel.car_img
+
+        console.log("================")
+        console.log(carousel);
         updateCarouselByPageAndSectionAndId(carousel);
 
         res.status(201).json({msg:"Done update carousel"});

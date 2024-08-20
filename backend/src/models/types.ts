@@ -3,13 +3,13 @@ export interface Carousel{
     id?:number;
     page:string;
     section:string;
-    car_img?:string;
-    car_title?:string;
-    car_content?:string;
-    car_link?:string;
-    car_link_text?:string;
-    car_name?:string;
-    car_job?:string;
+    car_img?:string|null;
+    car_title?:string|null;
+    car_content?:string|null;
+    car_link?:string|null;
+    car_link_text?:string|null;
+    car_name?:string|null;
+    car_job?:string|null;
 
 }
 

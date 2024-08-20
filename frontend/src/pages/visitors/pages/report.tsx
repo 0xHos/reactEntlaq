@@ -1,12 +1,37 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { useAxiosGetData } from "../../../hooks/useFetch";
 import { BACKEND_SERVER, ENDPOINT_CAROUSEL } from "../../../config";
 import { Carousel ,RportOrGallery} from "../../../types";
 import { Swiper,SwiperSlide } from "swiper/react";
 import 'swiper/css/grid';
+import { Autoplay,Navigation,Pagination ,EffectCoverflow } from 'swiper/modules';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronCircleLeft, faChevronCircleRight, faClose, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 
 
+
+const PopupVideo = ({url,showPopup ,setShowPopup})=>{
+
+
+    return(
+       <>
+        {
+            showPopup? 
+            <div className="fixed top-0 h-screen w-screen bg-custom-black" style={{zIndex:'50'}}>
+                <div className="size-96 bg-white flex flex-col items-center justify-center m-6 md:m-60 p-10 rounded-lg">
+                        <video controls>
+                        <source src={url} type="video/mp4" />
+                        Your browser does not support the video tag.
+                        </video>
+                    <FontAwesomeIcon onClick={()=>{setShowPopup(!showPopup)}} className="bg-red-800 text-white p-5 absolute top-[15%] right-[5%]" icon={faClose}/>
+                </div>
+            </div>
+            :null
+        }
+       </>
+    );
+}
 
 
 const Header = ()=> {
@@ -14,6 +39,8 @@ const Header = ()=> {
     const [carsouel, setCrsouel] = useState<Carousel>({});
     const [reports, setReports] = useState<RportOrGallery[]>([]);
     const {getData}= useAxiosGetData();
+    const [video_report_header , set_video_report_header] = useState("");
+    const [showPopup,setShowPopup] = useState(false);
 
 useEffect(() => {
     async function fetchData() {
@@ -28,6 +55,11 @@ useEffect(() => {
     async function fetchData() {
         const res  = await getData(`${BACKEND_SERVER}/api/gallery/${id}`,"");
         setReports(res);
+        reports.map((r)=>{
+            if(r.section == "video_report_header"){
+                set_video_report_header(`${BACKEND_SERVER}/uploads/${r.car_img}`)
+            }
+        })
     }
 
     fetchData();
@@ -35,68 +67,78 @@ useEffect(() => {
 
     return(
         <>
-            <div className="relative h-[80vh]">
+            <div className="relative h-[160vh]  xl:h-[90vh]">
                 <img  className="h-full w-full object-cover" src={`${BACKEND_SERVER}/uploads/${carsouel?.car_img}`}/>
-                <div className=" flex w-full h-full absolute z-10 top-0  bg-custom-opicty-blue p-10">
-                    <div className="w-full md:w-2/3">
-                        <h1 className="">{<div dangerouslySetInnerHTML={{__html:carsouel?.car_title}}></div>}</h1>
-                        <p className="mt-10  text-white"><div dangerouslySetInnerHTML={{__html:carsouel?.car_content}}></div></p>
-                        <div className=" mt-10 space-x-5">
-                            <a className="px-16 bg-customColor-blue text-white py-5 font-bold" href={carsouel?.car_link}>Access Report</a>
-                            <button> Lanuch Video</button>
-                        </div>
-                        {/* Partners: */}
-                        <div className="absolute bottom-0">
-                            <h1 className="text-white">Partners:</h1>
-                            <div className="flex">
-                                    {
-                                        reports?.map((rep:RportOrGallery)=>(
-                                            rep?.section == 'partners'?
-                                                <img
-                                                    className="size-32"
-                                                     key={rep?.id} 
-                                                     src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
-                                            :null
-                                        ))
-                                    }
+                <div className=" flex-col w-full h-full absolute z-10 top-0  bg-custom-opicty-blue p-10">
+                    <div className="w-full flex-col xl:flex-row">
+                            <div className="flex flex-col xl:flex-row space-y-7">
+
+                            <div className="w-full xl:w-2/3">
+                                <h1 className="">{<div dangerouslySetInnerHTML={{__html:carsouel?.car_title}}></div>}</h1>
+                                <p className="mt-10  text-white"><div dangerouslySetInnerHTML={{__html:carsouel?.car_content?.slice(0,850)}}></div></p>
+                                <div className=" mt-10 space-x-5">
+                                    <a className="px-16 bg-customColor-blue text-white py-5 font-bold" href={carsouel?.car_link}>Access Report</a>
+                                    <button className="font-bold text-lg text-white" onClick={()=>{setShowPopup(!showPopup)}}> <FontAwesomeIcon size="2x" icon={faPlayCircle}/> <span className="relative bottom-2">Lanuch Video</span></button>
+                                </div>
                             </div>
-                        </div>
+                            <div className="w-full xl:w-1/3">
+                                        <Swiper
+                                             slidesPerView={3}
+                                             spaceBetween={10}
+                                             autoplay={{delay: 2000,disableOnInteraction: false, }}
+                                             modules={[Autoplay, Navigation]}  
+                                             navigation={{
+                                             nextEl: '.swiper-button-next',
+                                             prevEl: '.swiper-button-prev',
+                                           }}
+                                           breakpoints={{
+                                            500:{
+                                                slidesPerView:2
+                                            }
+                                           }}
+                                            
+                                              
+                                           
+                                        >
+                                        {
+                                                reports?.map((rep:RportOrGallery)=>(
+                                                    rep?.section == 'header'?
+                                                        <SwiperSlide>
+                                                            <img
+                                                            className="h-72 w-52 rounded-lg"
+                                                            key={rep?.id} 
+                                                            src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
+                                                        </SwiperSlide>
+                                                    :null
+                                                ))
+                                        }
+                                            <div className="swiper-button-next relative top-8"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
+                                            <div className="swiper-button-prev relative  left-16 "> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
+        
+                                        </Swiper>
+                            </div>
+                            </div>
                     </div>
-                    {/* for image */}
-                    <div className="w-full md:w-1/3  hidden md:flex">
-                        <Swiper
-                            modules={[]}
-                            slidesPerView={1} // Show one slide at a time, with each slide containing a 2x2 grid
-                            pagination={{ clickable: true }} // Optional: Add pagination
-                        >
-                            {
-                                    reports?.map((rep: RportOrGallery, index: number) => {
-                                        // Group reports in chunks of 4 to create the 2x2 grid
-                                        const chunk = reports.slice(index * 4, index * 4 + 4);
-                                        return (
-                                            <SwiperSlide key={rep.id}>
-                                                <div className="grid grid-cols-2 gap-2">
-                                                    {
-                                                        chunk.map((item: RportOrGallery) => (
-                                                            item?.section === 'header' && (
-                                                                <img
-                                                                    key={item.id}
-                                                                    className="size-60"
-                                                                    src={`${BACKEND_SERVER}/uploads/${item.car_img}`}
-                                                                    alt="Image"
-                                                                />
-                                                            )
-                                                        ))
-                                                    }
-                                                </div>
+                    <h1 className="text-white font-bold mt-20">Partners:</h1>
+                    <Swiper
+                        modules={[Autoplay]}
+                        autoplay={true}
+                        slidesPerView={5}
+                    >
+                        {
+                                    reports?.map((rep:RportOrGallery)=>(
+                                        rep?.section == 'partners'?
+                                            <SwiperSlide key={rep?.id}>
+                                                <img className="size-28" src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
                                             </SwiperSlide>
-                                        );
-                                    })
-                            }
-                        </Swiper>
-                              
-                    </div>
+                                        :null
+                                    ))
+                        }
+                    </Swiper>
                 </div>
+               {
+                    showPopup?<PopupVideo setShowPopup={setShowPopup} showPopup={showPopup} url={video_report_header}/>:null
+               }
             </div>
         </>
     );
@@ -106,6 +148,9 @@ const Videos =()=>{
     const { id } = useParams();
     const [reports, setReports] = useState<RportOrGallery[]>([]);
     const {getData}= useAxiosGetData();
+    const [showPopup,setShowPopup] = useState(false);
+    const [joker,setJoker] = useState("");
+
 
     useEffect(() => {
         async function fetchData() {
@@ -122,22 +167,52 @@ const Videos =()=>{
                  <h1 className="text-center text-customColor-blue text-4xl font-extrabold my-20">Videos</h1>
 
                 <Swiper
-                    slidesPerView={5}
-                    spaceBetween={0}
+                    slidesPerView={4}
+                    spaceBetween={10}
+                    breakpoints={{
+                        500:{
+                            slidesPerView:1,
+                            spaceBetween:1
+
+                        },
+                        600:{
+                            slidesPerView:2,
+                            spaceBetween:5
+
+                        },
+                        700:{
+                            slidesPerView:3,
+                            spaceBetween:10
+                        },
+                        1000:{
+                            slidesPerView:4,
+                            spaceBetween:10
+                        }
+                    }}
                 >
                         {
                              reports?.map((rep:RportOrGallery)=>(
-                                rep?.section == 'header'?
-                                    <SwiperSlide>
-                                        <img
-                                        className="h-72 w-52"
-                                         key={rep?.id} 
-                                         src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
+                                rep?.section == 'videos'?
+                                    <SwiperSlide key={rep?.id }>
+                                        <div className="relative">
+                                            <video
+                                             className="h-96 w-80 object-cover"
+                                             src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
+                                             <FontAwesomeIcon  onClick={()=>{setShowPopup(!showPopup);setJoker(rep?.car_img)}} className="absolute top-1/2 left-[33%] text-blue-800 shadow-2xl" size="4x" icon={faPlayCircle}/> 
+                                    </div>
+                                    {                               
+                                    }
                                     </SwiperSlide>
                                 :null
                             ))
+                            
                         }
                 </Swiper>
+               {
+                
+                showPopup?<PopupVideo setShowPopup={setShowPopup} showPopup={showPopup} url={`${BACKEND_SERVER}/uploads/${joker}`}/>:null
+
+               }
             </div>
         </>
     );
@@ -163,15 +238,37 @@ const Insights =()=>{
                  <h1 className="text-center text-customColor-blue text-4xl font-extrabold my-20">Insights</h1>
 
                 <Swiper
+                    autoplay={true}
+                    modules={[Autoplay]}
                     slidesPerView={5}
                     spaceBetween={0}
+                    breakpoints={{
+                        500:{
+                            slidesPerView:1,
+                            spaceBetween:1
+
+                        },
+                        600:{
+                            slidesPerView:2,
+                            spaceBetween:5
+
+                        },
+                        700:{
+                            slidesPerView:3,
+                            spaceBetween:10
+                        },
+                        1000:{
+                            slidesPerView:4,
+                            spaceBetween:10
+                        }
+                    }}
                 >
                         {
                              reports?.map((rep:RportOrGallery)=>(
-                                rep?.section == 'header'?
+                                rep?.section == 'insights'?
                                     <SwiperSlide>
                                         <img
-                                        className="h-72 w-52"
+                                        className="h-96 w-80"
                                          key={rep?.id} 
                                          src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
                                     </SwiperSlide>
@@ -206,13 +303,35 @@ const News =()=>{
                 <Swiper
                     slidesPerView={5}
                     spaceBetween={0}
+                    autoplay={true}
+                    modules={[Autoplay]}
+                    breakpoints={{
+                        500:{
+                            slidesPerView:1,
+                            spaceBetween:1,
+
+                        },
+                        600:{
+                            slidesPerView:2,
+                            spaceBetween:5
+
+                        },
+                        700:{
+                            slidesPerView:3,
+                            spaceBetween:10
+                        },
+                        1000:{
+                            slidesPerView:4,
+                            spaceBetween:10
+                        }
+                    }}
                 >
                         {
                              reports?.map((rep:RportOrGallery)=>(
-                                rep?.section == 'header'?
+                                rep?.section == 'news'?
                                     <SwiperSlide>
                                         <img
-                                        className="h-72 w-52"
+                                        className="h-96 w-80"
                                          key={rep?.id} 
                                          src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
                                     </SwiperSlide>

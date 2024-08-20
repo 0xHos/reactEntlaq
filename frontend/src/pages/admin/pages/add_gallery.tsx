@@ -44,7 +44,7 @@ const Report = ()=>{
         const formData = new FormData();
         formData.append('id_car',reportId);            
         formData.append('section',section); 
-        formData.append('videoUrl',videoUrl);            
+        formData.append('car_name',videoUrl);            
         formData.append('car_img',file)
         try{
             const res = await sendData(endpoint_gallery,formData,sessionStorage.getItem("token")||"")
@@ -79,6 +79,19 @@ const Report = ()=>{
                                 <option value='partners'>Partners</option>
 
                             </select>
+                            {
+                                section == "header"?
+                                    <>
+                                       <label htmlFor="section" className="block mb-2 text-sm font-medium text-gray-900">Type</label>
+                                       <select name="car_name" className=" block mb-2 text-sm font-medium text-gray-900" onChange={handelSection}>
+                                            <option value='image_report_header'>Image</option>
+                                            <option value='video_report_header'>Video</option> 
+                                       </select>
+                                    </>
+
+                                :null
+                            }
+
                             {section == 'videos'?<input type="text" onBlur={handleInputVideoUrl} placeholder="video url" className="m-1  border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"/>:null}
                             <input type="file" onChange={handelFile} name="car_img"/>
                             <button type="submit"  className="w-full text-white bg-blue-800 p-5 mt-5 rounded-lg">
