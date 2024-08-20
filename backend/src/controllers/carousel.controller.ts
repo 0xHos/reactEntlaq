@@ -108,8 +108,11 @@ async function updateCarousel(req:Request,res:Response) {
     carousel.id = +req.body.id;
     
     let multerRequest = req as (typeof req & {file:{filename:string}});
-    carousel.car_img =  `${multerRequest.file.filename  || undefined}`;
-
+    if(multerRequest.file){
+        carousel.car_img =  `${multerRequest.file.filename}`
+    }else{
+        carousel.car_img =  req.body.car_img;
+    }
     try{
 
         updateCarouselByPageAndSectionAndId(carousel);

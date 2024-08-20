@@ -36,7 +36,8 @@ export default function Update(){
       };
     
     const handleFileChange = (files) => {
-        setCarousel((prevData) => ({...prevData,files}));
+        setCarousel((prevData) => ({...prevData,car_img:files[0]}));
+        console.log(carousel);
       };
 
 
@@ -45,19 +46,10 @@ export default function Update(){
         const formData = new FormData();
     
         for (let [key, value] of Object.entries(carousel)) {
-            if (key === 'files' && value.length > 0) {
-                // If files were uploaded, append them to FormData
-                value.forEach((file, index) => {
-                    formData.append(`file${index}`, file);
-                });
-            } else if (key === 'files' && value.length === 0) {
-                // If no files were uploaded, append the existing image filename
-                formData.append('car_img', carousel.car_img);
-            } else {
-                formData.append(key, value);
-            }
+                formData.append(key,value);
         }
-    
+        
+
         try {
             const res = await updatedData(ENDPOINT_CAROUSEL, formData, sessionStorage.getItem("token") || "");
             alert(res.msg);
@@ -67,7 +59,6 @@ export default function Update(){
         }
     };
     
-
     return(
         <>
             {

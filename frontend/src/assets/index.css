@@ -616,10 +616,6 @@ video {
   position: sticky;
 }
 
-.inset-2 {
-  inset: 0.5rem;
-}
-
 .-bottom-10 {
   bottom: -2.5rem;
 }
@@ -652,8 +648,8 @@ video {
   left: -1.5rem;
 }
 
-.-right-2 {
-  right: -0.5rem;
+.-top-4 {
+  top: -1rem;
 }
 
 .bottom-0 {
@@ -748,44 +744,16 @@ video {
   top: 6rem;
 }
 
+.top-\[10\%\] {
+  top: 10%;
+}
+
 .top-\[15\%\] {
   top: 15%;
 }
 
 .top-\[20\%\] {
   top: 20%;
-}
-
-.-right-4 {
-  right: -1rem;
-}
-
-.top-\[10\%\] {
-  top: 10%;
-}
-
-.top-4 {
-  top: 1rem;
-}
-
-.top-6 {
-  top: 1.5rem;
-}
-
-.-top-0 {
-  top: -0px;
-}
-
-.-top-2 {
-  top: -0.5rem;
-}
-
-.-top-6 {
-  top: -1.5rem;
-}
-
-.-top-4 {
-  top: -1rem;
 }
 
 .-z-10 {
@@ -964,22 +932,6 @@ video {
   margin-top: 1.75rem;
 }
 
-.ml-60 {
-  margin-left: 15rem;
-}
-
-.mr-60 {
-  margin-right: 15rem;
-}
-
-.mr-96 {
-  margin-right: 24rem;
-}
-
-.mr-\[50rem\] {
-  margin-right: 50rem;
-}
-
 .block {
   display: block;
 }
@@ -1118,6 +1070,10 @@ video {
   height: 100%;
 }
 
+.h-\[70\%\] {
+  height: 70%;
+}
+
 .h-\[75vh\] {
   height: 75vh;
 }
@@ -1136,18 +1092,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[70\%\] {
-  height: 70%;
-}
-
-.h-8 {
-  height: 2rem;
-}
-
-.h-6 {
-  height: 1.5rem;
 }
 
 .w-1\/12 {
@@ -1206,12 +1150,12 @@ video {
   width: 13rem;
 }
 
-.w-96 {
-  width: 24rem;
-}
-
 .w-\[100\%\] {
   width: 100%;
+}
+
+.w-\[70\%\] {
+  width: 70%;
 }
 
 .w-fit {
@@ -1225,14 +1169,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-\[70\%\] {
-  width: 70%;
-}
-
-.w-dvw {
-  width: 100dvw;
 }
 
 .min-w-full {
@@ -1390,10 +1326,6 @@ video {
   overflow: hidden;
 }
 
-.overflow-scroll {
-  overflow: scroll;
-}
-
 .overflow-x-auto {
   overflow-x: auto;
 }
@@ -1490,11 +1422,6 @@ video {
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
-}
-
-.border-black {
-  --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
 .bg-black {
@@ -1734,6 +1661,10 @@ video {
   padding-left: 1rem;
 }
 
+.pl-6 {
+  padding-left: 1.5rem;
+}
+
 .pt-24 {
   padding-top: 6rem;
 }
@@ -1829,10 +1760,6 @@ video {
 
 .uppercase {
   text-transform: uppercase;
-}
-
-.italic {
-  font-style: italic;
 }
 
 .leading-tight {
@@ -1959,10 +1886,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.underline {
-  text-decoration-line: underline;
 }
 
 .opacity-75 {

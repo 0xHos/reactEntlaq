@@ -48,14 +48,8 @@ export default function AddReport(){
 
     return (
         <>
-         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                           <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"></a>
-                           <div className="w-full bg-white rounded-lg dark:border md:mt-0 sm:max-w-md xl:p-0 shadow-lg dark:border-gray-700">
-                               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                               <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                                   Add Reoport
-                               </h1>
-                               <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+            <div className="w-full bg-white p-5 rounded-lg border-2">
+            <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
                                    <div className="w-full">
                                         <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 ">Title</label>
                                         {/* <input onBlur={handleInput} type="text" name="car_title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Title" required></input> */}
@@ -79,9 +73,8 @@ export default function AddReport(){
                                    <input type="file" onChange={handelFile} name="car_img"/>
                                    <button type="submit" className="w-full text-white bg-blue-800 p-5 mt-5 rounded-lg">Add <FontAwesomeIcon icon={faAdd}/></button>
                                </form>
-                               </div>
-                           </div>
-                           </div>
+                              
+            </div>
        </>
       );
 }

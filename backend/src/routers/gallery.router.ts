@@ -8,5 +8,5 @@ export const galleryRouter = Router();
 galleryRouter.get("/:id" , fetchGalleryById);
 galleryRouter.use(checkAuth as unknown as RequestHandler);
 galleryRouter.post('/', upload.single('car_img'), addGallery);
-galleryRouter.delete("/api/:id" , deleteGallery);
-galleryRouter.delete("/api/image/:id" , deleteGalleryImage);
+galleryRouter.delete("/:id" , deleteGallery);
+galleryRouter.delete("/image/:id" , deleteGalleryImage);

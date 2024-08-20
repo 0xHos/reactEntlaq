@@ -13,6 +13,9 @@ export default function useAxiosSendData() {
                 },
               }
           );
+          if(response.status == 401){
+            sessionStorage.removeItem("token");location.reload()
+          }
           return response.data;
         }catch(err){
           console.log(err);
@@ -33,6 +36,9 @@ export  function useAxiosGetData(){
         setLoading(true);
         const response = await fetch(url,{method:'GET', headers: {'Content-Type': 'application/json' , 'token':token}});
         const data =  await response.json();
+        if(response.status == 401){
+          sessionStorage.removeItem("token");location.reload()
+        }
         setLoading(false);
         return data;
       }catch(err){
@@ -48,6 +54,9 @@ export function useAxiosDeleteData(){
       try{
         const response = await fetch(url,{method:'DELETE', headers: {'Content-Type': 'application/json' , 'token':token}});
         const data =  await response.json();
+        if(response.status == 401){
+          sessionStorage.removeItem("token");location.reload()
+        }
         return data;
       }catch(err){
         console.log(err)
@@ -68,6 +77,9 @@ export function useAxiosUpdateData(){
             },
           }
       );
+      if(response.status == 401){
+        sessionStorage.removeItem("token");location.reload()
+      }
       return response.data;
     }catch(err){
       console.log(err);

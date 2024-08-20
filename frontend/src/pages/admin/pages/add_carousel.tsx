@@ -70,75 +70,68 @@ export default function AddCarousel() {
   console.log(refI)
   return (
     <>
-     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                       <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"></a>
-                       <div className="w-full bg-white rounded-lg dark:border md:mt-0 sm:max-w-md xl:p-0 shadow-lg dark:border-gray-700">
-                           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                           <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                               Add In Section
-                           </h1>
-                           <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
-                               <div className="w-full">
-                               <label htmlFor="page" className="block mb-2 text-sm font-medium text-gray-900">
-                                   Page
-                               </label>
-                               <select name="page" className="w-full p-5" onChange={handelChangePage}>
-                                   {PageOptionDropdown.map((e)=>(<option key={e.show_name+e.value} value={e.value}>{e.show_name}</option>))}
-                               </select>
-                               </div>
-                               <div className="w-full">
-                               <label htmlFor="section" className="block mb-2 text-sm font-medium text-gray-900">
-                                   Section
-                               </label>
-                               <select name="section" className="w-full p-5" onChange={handelChangeSection}>
-                                   {SectionOptionDropdown[pageChoosed]?.map((e)=><option key={e.show_name+e.value} value={e.value}>{e.show_name}</option>)}
-                               </select>
-                               </div>
-                                   {SectionOptionDropdown[pageChoosed]?.filter((e)=>e.value == sectionChoosed)[0]?.input?.map((ei,i)=>
-                                      <>
-                                       {
+           <div className="bg-white p-5 rounded-lg border-2">
+              <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">Add In Section </h1>
+              <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
+                                <div className="w-full">
+                                <label htmlFor="page" className="block mb-2 text-sm font-medium text-gray-900">
+                                    Page
+                                </label>
+                                <select name="page" className="w-full p-5" onChange={handelChangePage}>
+                                    {PageOptionDropdown.map((e)=>(<option key={e.show_name+e.value} value={e.value}>{e.show_name}</option>))}
+                                </select>
+                                </div>
+                                <div className="w-full">
+                                <label htmlFor="section" className="block mb-2 text-sm font-medium text-gray-900">
+                                    Section
+                                </label>
+                                <select name="section" className="w-full p-5" onChange={handelChangeSection}>
+                                    {SectionOptionDropdown[pageChoosed]?.map((e)=><option key={e.show_name+e.value} value={e.value}>{e.show_name}</option>)}
+                                </select>
+                                </div>
+                                    {SectionOptionDropdown[pageChoosed]?.filter((e)=>e.value == sectionChoosed)[0]?.input?.map((ei,i)=>
                                         <>
-                                        <h1> {ei.show_name}</h1>
                                         {
-                                          
-                                          ei.name == "car_link"?
-                                          <input
-                                            onBlur={handleInput} 
-                                            type={ei.type}
+                                          <>
+                                          <h1> {ei.show_name}</h1>
+                                          {
+                                            
+                                            ei.name == "car_link"?
+                                            <input
+                                              onBlur={handleInput} 
+                                              type={ei.type}
+                                              name={ei.name}
+                                              placeholder={ei.show_name} 
+                                              key={ei.show_name+ei.value} 
+                                              className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" required></input> 
+
+                                            :<JoditEditor
+                                            ref={ element => refI.current[i] = element }
+                                            value={ei.value}
                                             name={ei.name}
-                                            placeholder={ei.show_name} 
-                                            key={ei.show_name+ei.value} 
-                                            className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" required></input> 
-
-                                          :<JoditEditor
-                                          ref={ element => refI.current[i] = element }
-                                          value={ei.value}
-                                          name={ei.name}
-                                          onChange={(ex) =>{
-                                            console.log(refI.current[i]);
-                                            console.log(ex);
-                                            setCarousel((prev: Carousel) =>  ({...prev, [ei.name]:ex}))}}
-                                       />
+                                            onChange={(ex) =>{
+                                              console.log(refI.current[i]);
+                                              console.log(ex);
+                                              setCarousel((prev: Carousel) =>  ({...prev, [ei.name]:ex}))}}
+                                        />
+                                          }
+                                        <hr className="bg-blue-800"/>
+                                          </>
                                         }
-                                       <hr className="bg-blue-800"/>
+
                                         </>
-                                       }
+                                    ) || null}
+                                {
+                                    sectionChoosed == 'about_us'?null 
+                                    :<input type="file" onChange={handelFile} name="car_img"/>                                    
+                                }
+                                
 
-                                      </>
-                                   ) || null}
-                               {
-                                  sectionChoosed == 'about_us'?null 
-                                  :<input type="file" onChange={handelFile} name="car_img"/>                                    
-                               }
-                              
-
-                               <button type="submit" className="w-full text-white bg-blue-800 p-5 mt-5 rounded-lg">
-                               Add <FontAwesomeIcon icon={faAdd}/>
-                               </button>
-                           </form>
-                           </div>
-                       </div>
-                       </div>
+                                <button type="submit" className="w-full text-white bg-blue-800 p-5 mt-5 rounded-lg">
+                                Add <FontAwesomeIcon icon={faAdd}/>
+                                </button>
+              </form>
+           </div>
    </>
   );
 }
