@@ -57,3 +57,14 @@ export interface Message{
     message:string;
 
 }
+
+
+export interface UserSub{
+    id?:string;
+    first_name?:string;
+    last_name?:string;
+    phone?:string;
+    position?:string;
+    email?:string;
+
+}

@@ -45,8 +45,8 @@ export default  function SectionView(){
                             return(
                                 <tr className="bg-white  border-b hover:bg-gray-100" key={index}>
                                     {carousel.car_img != null ?<td className=" py-4 border-b border-gray-200 text-sm"><img className="size-24 rounded-full p-4" src={`${BACKEND_SERVER}/uploads/${carousel.car_img}`}/></td>:null}
-                                    {carousel.car_title != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_title.substring(0,20)}</td>:null}
-                                    {carousel.car_content != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_content.substring(0,30)}</td>:null}
+                                    {carousel.car_title != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_title.replace(/<[^>]*>/g, '').substring(0,20)}</td>:null}
+                                    {carousel.car_content != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_content.replace(/<[^>]*>/g, '').substring(0,30)}</td>:null}
                                     {carousel.car_link != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_link.substring(0,30)}</td>:null}
                                     {carousel.car_link_text != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_link_text.substring(0,30)}</td>:null}
                                     {carousel.car_name != null ?<td className="px-6 py-4 border-b border-gray-200 text-sm">{carousel.car_name.substring(0,30)}</td>:null}

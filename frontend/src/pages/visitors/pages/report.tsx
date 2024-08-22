@@ -11,8 +11,22 @@ import { faChevronCircleLeft, faChevronCircleRight, faClose, faPlayCircle } from
 
 
 
-const PopupVideo = ({url,showPopup ,setShowPopup})=>{
+const PopupVideo = ({galleryId,showPopup ,setShowPopup})=>{
+    const [video_report_header , set_video_report_header] = useState("");
+    const {getData}= useAxiosGetData();
 
+    useEffect(()=>{
+        async function fetchVedio() {
+            const res  = await getData(`${BACKEND_SERVER}/api/gallery/${galleryId}`,"");
+            res?.map((r)=>{
+                if(r.section == 'video_report_header'){
+                    console.log(r.car_img);
+                    set_video_report_header(r?.car_img);
+                }
+            })
+        }
+        fetchVedio();
+    },[])
 
     return(
        <>
@@ -21,7 +35,7 @@ const PopupVideo = ({url,showPopup ,setShowPopup})=>{
             <div className="fixed top-0 h-screen w-screen bg-custom-black" style={{zIndex:'50'}}>
                 <div className="size-96 bg-white flex flex-col items-center justify-center m-6 md:m-60 p-10 rounded-lg">
                         <video controls>
-                        <source src={url} type="video/mp4" />
+                        <source src={`${BACKEND_SERVER}/uploads/${video_report_header}`} type="video/mp4" />
                         Your browser does not support the video tag.
                         </video>
                     <FontAwesomeIcon onClick={()=>{setShowPopup(!showPopup)}} className="bg-red-800 text-white p-5 absolute top-[15%] right-[5%]" icon={faClose}/>
@@ -33,6 +47,131 @@ const PopupVideo = ({url,showPopup ,setShowPopup})=>{
     );
 }
 
+const PopupForm = ({galleryId,showPopup})=>{
+    const [report_report_header , set_report_report_header] = useState("");
+    const {getData}= useAxiosGetData();
+
+    useEffect(()=>{
+        async function fetchVedio() {
+            const res  = await getData(`${BACKEND_SERVER}/api/gallery/${galleryId}`,"");
+            res?.map((r)=>{
+                if(r.section == 'report_report_header'){
+                    console.log(r.car_img);
+                    set_report_report_header(r?.car_img);
+                }
+            })
+        }
+        fetchVedio();
+    },[])
+    return (
+        <>
+          {showPopup ? (
+        <div className="fixed top-0 h-screen w-screen bg-custom-black" style={{zIndex:'50'}}>
+            <div className="max-w-md mx-auto p-4 bg-white rounded shadow-md  relative top-[20%] rounded-xl">
+              <form className="space-y-4" action={`${BACKEND_SERVER}/subscription/`} method="POST">
+                <input type="hidden" name="reportId" value={report_report_header} />
+                {/* First Name */}
+                <div>
+                  <label
+                    htmlFor="first-name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    id="first-name"
+                    name="first_name"
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="First Name"
+                  />
+                </div>
+      
+                {/* Last Name */}
+                <div>
+                  <label
+                    htmlFor="last-name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="last-name"
+                    name="last_name"
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Last Name"
+                  />
+                </div>
+                 {/* Phone */}
+                 <div>
+                  <label
+                    htmlFor="last-name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Phone
+                  </label>
+                  <input
+                    type="text"
+                    id="last-name"
+                    name="phone"
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Phone"
+                  />
+                </div>
+                 {/* position */}
+                 <div>
+                  <label
+                    htmlFor="last-name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    position
+                  </label>
+                  <input
+                    type="text"
+                    id="last-name"
+                    name="position"
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="position"
+                  />
+                </div>
+      
+                {/* Email */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Email"
+                  />
+                </div>
+      
+                {/* Submit Button */}
+                <div>
+                  <button
+                    type="submit"
+                    className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+            </div>
+
+          ) : null}
+        </>
+      );
+      
+}
+
 
 const Header = ()=> {
     const { id } = useParams();
@@ -40,33 +179,41 @@ const Header = ()=> {
     const [reports, setReports] = useState<RportOrGallery[]>([]);
     const {getData}= useAxiosGetData();
     const [video_report_header , set_video_report_header] = useState("");
+    const [report_report_header , set_report_report_header] = useState("");
+
     const [showPopup,setShowPopup] = useState(false);
+    const [showPopupReoportForm,setShowPopupReoportForm] = useState(false);
+
 
 useEffect(() => {
     async function fetchData() {
         const res  = await getData(`${ENDPOINT_CAROUSEL}/report/header/${id}`,"");
         setCrsouel(res?.carousels);
     }
-
-    fetchData();
-}, []);
-
-useEffect(() => {
-    async function fetchData() {
+    async function fetchDataGallery() {
         const res  = await getData(`${BACKEND_SERVER}/api/gallery/${id}`,"");
         setReports(res);
         reports.map((r)=>{
+            console.log(r);
             if(r.section == "video_report_header"){
-                set_video_report_header(`${BACKEND_SERVER}/uploads/${r.car_img}`)
+                    set_video_report_header(r.car_img)
+            }else if(r.section == "report_report_header"){
+                    set_report_report_header(r.car_img);
             }
         })
     }
 
     fetchData();
+    fetchDataGallery();
 }, []);
+
+
+
+
 
     return(
         <>
+            {showPopupReoportForm? <PopupForm showPopup={showPopupReoportForm} galleryId={id}/>:null}
             <div className="relative h-[160vh]  xl:h-[90vh]">
                 <img  className="h-full w-full object-cover" src={`${BACKEND_SERVER}/uploads/${carsouel?.car_img}`}/>
                 <div className=" flex-col w-full h-full absolute z-10 top-0  bg-custom-opicty-blue p-10">
@@ -77,7 +224,7 @@ useEffect(() => {
                                 <h1 className="">{<div dangerouslySetInnerHTML={{__html:carsouel?.car_title}}></div>}</h1>
                                 <p className="mt-10  text-white"><div dangerouslySetInnerHTML={{__html:carsouel?.car_content?.slice(0,850)}}></div></p>
                                 <div className=" mt-10 space-x-5">
-                                    <a className="px-16 bg-customColor-blue text-white py-5 font-bold" href={carsouel?.car_link}>Access Report</a>
+                                    <button className="px-16 bg-customColor-blue text-white py-5 font-bold" onClick={()=>{setShowPopupReoportForm(!showPopupReoportForm)}}>Access Report</button>
                                     <button className="font-bold text-lg text-white" onClick={()=>{setShowPopup(!showPopup)}}> <FontAwesomeIcon size="2x" icon={faPlayCircle}/> <span className="relative bottom-2">Lanuch Video</span></button>
                                 </div>
                             </div>
@@ -137,7 +284,7 @@ useEffect(() => {
                     </Swiper>
                 </div>
                {
-                    showPopup?<PopupVideo setShowPopup={setShowPopup} showPopup={showPopup} url={video_report_header}/>:null
+                    showPopup?<PopupVideo galleryId={id} setShowPopup={setShowPopup} showPopup={showPopup} url={video_report_header}/>:null
                }
             </div>
         </>

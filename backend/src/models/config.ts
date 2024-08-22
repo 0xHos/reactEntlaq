@@ -39,6 +39,27 @@ const createUserTable = () => {
   };
 
 
+
+  const createUserSubscriptionTable = () => {
+    const query = `
+      CREATE TABLE IF NOT EXISTS users_subscription (
+        id INTEGER PRIMARY KEY,
+        first_name TEXT NOT NULL ,
+        last_name TEXT NOT NULL ,
+        phone TEXT NOT NULL ,
+        position TEXT NOT NULL ,
+        email TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    db.run(query, (err) => {
+      if (err) {
+        console.error('Error creating users table:', err.message);
+      }
+    });
+  };
+
+
   // create carousel table that is the main table for website 
 const createCarouselTable = () => {
     const query = `
@@ -111,6 +132,7 @@ const createCarouselTable = () => {
     createCarouselTable();
     createMessageTable();
     createGalleryTable();
+    createUserSubscriptionTable();
     return db;
   }
 

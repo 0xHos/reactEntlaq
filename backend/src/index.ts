@@ -10,7 +10,7 @@ import { userRouter } from "./routers/user.router";
 import { fetchCountPagination } from "./controllers/carousel.controller";
 import { galleryRouter } from "./routers/gallery.router";
 import { messageRouter } from "./routers/message.router";
-
+import subscriptionPage from "./controllers/subscription";
 
 
 
@@ -26,11 +26,9 @@ app.use('/uploads', express.static('uploads'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:true}));
 
-
-
-
+app.post('/subscription/',subscriptionPage);
 app.get('/api/count/:page/:section', fetchCountPagination)
 app.use('/api/carousels',carouselRouter);
 app.use("/api/users" , userRouter);

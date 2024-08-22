@@ -66,7 +66,7 @@ const Report = ()=>{
                                 <option>-</option>
                                 {
                                     
-                                    carousels?.map((car:Carousel)=>(<option className="w-full"  key={car.id} value={car?.id}>{car.car_title}</option>))
+                                    carousels?.map((car:Carousel)=>(<option className="w-full"  key={car.id} value={car?.id}>{car?.car_title.replace(/<[^>]*>/g, '')}</option>))
                                 }
                             </select>
                             <label htmlFor="section" className="block mb-2 text-sm font-medium text-gray-900">section</label>
@@ -85,7 +85,8 @@ const Report = ()=>{
                                        <label htmlFor="section" className="block mb-2 text-sm font-medium text-gray-900">Type</label>
                                        <select name="car_name" className=" block mb-2 text-sm font-medium text-gray-900" onChange={handelSection}>
                                             <option value='image_report_header'>Image</option>
-                                            <option value='video_report_header'>Video</option> 
+                                            <option value='video_report_header'>Video</option>
+                                            <option value='report_report_header'>Report</option> 
                                        </select>
                                     </>
 

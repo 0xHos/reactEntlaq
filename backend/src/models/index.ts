@@ -1,4 +1,4 @@
-import { Carousel, Gallery, Message, User } from "./types";
+import { Carousel, Gallery, Message, User, UserSub } from "./types";
 import { initSqlite } from "./config";
 import { promises as fs } from 'fs';
 import { uploadPath } from '../config';
@@ -392,3 +392,67 @@ export const deleteGalleryImageById= (id:number):Promise<void> =>{
 }
 
 
+
+
+
+
+/*
+
+            =========[    sql for User subscription  ]========
+
+*/
+
+
+
+export const insertUserSubscription= (user:UserSub):Promise<boolean>=>{
+  const query = `INSERT INTO users_subscription (
+                                first_name ,
+                                last_name ,
+                                phone,
+                                position,
+                                email
+                                )
+                                VALUES (?, ?, ?, ?, ?)`;
+  
+  return new Promise((resolve,reject)=>{
+      db.run(query, [user.first_name,user.last_name,user.phone,user.position,user.email], function (err) {
+        if(err){
+          console.log(`Error inserting user_subscription: ${err.message}`);
+          return reject(false);
+        }
+
+        return resolve(true);
+      });
+      
+  });
+    
+
+};
+
+
+export const getAllUserSub = (): Promise<UserSub[]> => {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT * FROM users_subscription`;
+    db.all(query, [], (err, rows) => {
+      if (err) {
+        return reject(`Error retrieving all  users_subscription: ${err.message}`);
+      }
+      resolve(rows as UserSub[]);
+    });
+  });
+};
+
+
+export const deleteUserById= (id:number):Promise<void> =>{
+  return new Promise((resolve, reject) => {
+    const query = `
+    DELETE FROM "users_subscription" WHERE "id"=?`;
+    db.run(query, [id], (err) => {
+      if (err) {
+        return reject(`Error Deleteing user_subscription: ${err.message}`);
+      }
+      console.log(`done users_subscription`);
+      resolve();
+    });
+  });
+}

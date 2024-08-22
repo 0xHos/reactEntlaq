@@ -62,14 +62,10 @@ export default function AddReport(){
                                 } } value={""}/>
                                         {/* <input onBlur={handleInput} type="text" name="car_content" id="content" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Content" required></input> */}
                                    </div>
-                                   <div className="w-full">
-                                        <label htmlFor="video" className="block mb-2 text-sm font-medium text-gray-900 ">URL Video</label>
-                                        <input onBlur={handleInput} type="text" name="car_link" id="video" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="URL Video" required></input>
-                                   </div>
-                                   <div className="w-full">
+                                   {/* <div className="w-full">
                                         <label htmlFor="report" className="block mb-2 text-sm font-medium text-gray-900 ">URL Report</label>
                                         <input onBlur={handleInput} type="text" name="car_link_text" id="report" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="URL Report" required></input>
-                                   </div>
+                                   </div> */}
                                    <input type="file" onChange={handelFile} name="car_img"/>
                                    <button type="submit" className="w-full text-white bg-blue-800 p-5 mt-5 rounded-lg">Add <FontAwesomeIcon icon={faAdd}/></button>
                                </form>

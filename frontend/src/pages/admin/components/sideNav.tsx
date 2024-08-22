@@ -90,8 +90,10 @@ export default function SideNav(){
                 
                 <div id="root-menu" className="  w-full overflow-y-auto ">
                     <div id="menu" className="text-blue-900  p-6 basis-3/4 md:basis-1/4 flex flex-col ">
+                    <Link className="font-extrabold pl-6 py-3" to="subscriptions">Subscription</Link>  
                     <Link className="font-extrabold p-6" to="reports">Report</Link>  
-                    <Link className="font-extrabold pl-6 py-3" to="galleries">Gallery</Link>  
+                    <Link className="font-extrabold pl-6 py-3" to="galleries">Gallery</Link>
+
                     <hr/>
                         {
                             PageOptionDropdown.map((page,index)=>{

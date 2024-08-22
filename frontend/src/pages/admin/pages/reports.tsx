@@ -3,10 +3,12 @@ import { BACKEND_SERVER, ENDPOINT_CAROUSEL } from "../../../config";
 import { useAxiosDeleteData, useAxiosGetData } from "../../../hooks/useFetch";
 import { Carousel, Message } from "../../../types";
 import MessageDetails from "./show_message";
+import { useNavigate } from "react-router-dom";
 
 const ButtonMore = ({id , message})=>{
     const {deleteData} = useAxiosDeleteData();
     const [showPopup, setShowPopup] = useState(false);
+    const navigator = useNavigate()
 
     const handleDelete = async()=>{
 
@@ -25,13 +27,14 @@ const ButtonMore = ({id , message})=>{
         }
     }
     const handelShowMessage = ()=>{
-        setShowPopup(!showPopup)
+        // setShowPopup(!showPopup)
+        navigator(`edite/${id}`)
         
     }
     return(
         <>
-            <button onClick={handleDelete} className="text-red-500 hover:text-red-700 px-2 py-1">Delete</button>|
-            {/* <button onClick={handelShowMessage} className="text-blue-500 hover:text-blue-950 px-2 py-1">show</button> */}
+            <button onClick={handleDelete} className="text-red-500 hover:text-red-700 px-2 py-1">Delete</button> | 
+            <button onClick={handelShowMessage} className="text-blue-500 hover:text-blue-950 px-2 py-1">Edite</button>
             {showPopup?<MessageDetails message={message} handelClose={handelShowMessage}/>:null}
         </>
     );
@@ -67,7 +70,7 @@ export default function Reports(){
                         {reports?.map((report:Carousel) => (
                             <tr key={report.id} className="hover:bg-gray-100">
                                 {/* <td className="px-6 py-4 border-b border-gray-200 text-sm">{message?.id}</td> */}
-                                <td className="px-6 py-4 border-b border-gray-200 text-sm">{report?.car_title?.slice(0, 20)}{report?.car_title?.length > 20 && "..."}</td>
+                                <td className="px-6 py-4 border-b border-gray-200 text-sm">{report?.car_title.replace(/<[^>]*>/g, '').slice(0, 40)}{report?.car_title?.length > 40 && "..."}</td>
                                 <td className="px-6 py-4 border-b border-gray-200 text-sm"><ButtonMore id={report?.id} message={{}}/></td>
                         </tr>
                         ))}

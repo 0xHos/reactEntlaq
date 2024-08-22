@@ -80,7 +80,7 @@ export function Navbar(){
                                                 {
                                                     reports?.map(car=>(
                                                         <>
-                                                         <li className={styleMenuInMenu}><a className="text-sm font-normal" href={`/Report/${car?.id}`}>{car?.car_title}</a></li>
+                                                         <li className={styleMenuInMenu}><a className="text-sm font-normal" href={`/Report/${car?.id}`}>{car?.car_title?.replace(/<[^>]*>/g, '')}</a></li>
                                                         </>
                                                     ))
                                                 }
