@@ -239,13 +239,12 @@ useEffect(() => {
                                              prevEl: '.swiper-button-prev',
                                            }}
                                            breakpoints={{
-                                            500:{
+                                            400:{
                                                 slidesPerView:2
                                             }
                                            }}
                                             
-                                              
-                                           
+                                                
                                         >
                                         {
                                                 reports?.map((rep:RportOrGallery)=>(
@@ -266,7 +265,7 @@ useEffect(() => {
                             </div>
                             </div>
                     </div>
-                    <h1 className="text-white font-bold mt-20">Partners:</h1>
+                    <h1 className="text-white font-bold mt-10">Partners:</h1>
                     <Swiper
                         modules={[Autoplay]}
                         autoplay={true}

@@ -1,6 +1,6 @@
 import { faChevronCircleLeft, faChevronCircleRight, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Swiper } from "swiper/react";
 import { SwiperSlide } from "swiper/react";
 import { ENDPOINT_CAROUSEL, BACKEND_SERVER } from "../../../../../config";
@@ -22,7 +22,8 @@ export default function Gallery() {
     const [page, setPage] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
     const [galleryId, setGalleryId] = useState('');
-
+    const refPage = useRef([]);
+    const [light,setLight] = useState(page/6);
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
@@ -33,31 +34,39 @@ export default function Gallery() {
         togglePopup();
     };
 
-    useEffect(() => {
-        getData(`${ENDPOINT_CAROUSEL}/media_center/gallery/6/${page}`, '').then((res: Carousel[]) => {
+    useEffect(()=>{
+        getData(`${ENDPOINT_CAROUSEL}/media_center/gallery/6/0`,'').then((res:Carousel[])=>{
             setCarousel(res);
         });
-        getData(`${BACKEND_SERVER}/api/count/media_center/gallery`, '').then((res) => {
-            setTotalPage(Math.ceil((+res?.total / 6)));
+        getData(`${BACKEND_SERVER}/api/count/media_center/gallery`,'').then((res)=>{
+            setTotalPage(Math.ceil((+res?.total/6)));
         });
-    }, [page]);
+    },[]);
 
-    const handelGetNextCarouselPageination = () => {
-        if (page < totalPage * 6) {
-            setPage(page + 6);
-        }
-    };
+    useEffect(()=>{
+        console.log(page);
+        getData(`${ENDPOINT_CAROUSEL}/media_center/gallery/6/${page}`,'').then((res:Carousel[])=>{
+            if(res.length){
+                setCarousel(res);
+                setLight(page/6)
 
-    const handelGetPrevCarouselPageination = () => {
-        if (page > 0 || page === 0) {
-            setPage(page - 6);
-        } else {
-            setPage(0);
-        }
-    };
+            }
+        });
+    },[page])
+
+    const handelGetPrevCarouselPageination = ()=>{
+        page <= 0?setPage(0):setPage(page-6);
+        
+    }
+    const handelGetNextCarouselPageination = ()=>{
+        page >= totalPage*6-6?setPage(totalPage*6-6):setPage(page+6);
+
+    }
 
     return (
         <>
+                        {showPopup && <Popup galleryId={galleryId} togglePopup={togglePopup} />}
+
             <div id="news" className="">
                 <h1 className="text-center text-customColor-blue text-4xl font-extrabold mt-20">Gallery</h1>
                 <div className="flex flex-col md:flex-row flex-wrap p-10">
@@ -69,26 +78,24 @@ export default function Gallery() {
                                 className="w-full h-96 object-cover rounded-t-2xl"
                                 src={`${BACKEND_SERVER}/uploads/${car?.car_img}`}
                             />
-                            <h2 className="p-6 text-center text-white text-xl font-bold mt-2">{car?.car_title}</h2>
-                            <h2 className=" text-center text-white text-xl font-mono ">{car?.car_content}</h2>
+                            <h2 className="p-6 text-center text-white text-xl font-bold mt-2">{<div dangerouslySetInnerHTML={{__html:car?.car_title}}></div>}</h2>
+                            <h2 className=" text-center text-white text-xl font-mono ">{<div dangerouslySetInnerHTML={{__html:car?.car_content}}></div>}</h2>
 
                         </div>
                     ))}
-                    <div className="w-full flex items-center justify-center mt-14 space-x-2">
-                        <button onClick={handelGetPrevCarouselPageination}>
-                            <FontAwesomeIcon className="text-slate-400" size="2x" icon={faChevronCircleLeft} />
-                        </button>
-                        <button onClick={handelGetNextCarouselPageination}>
-                            <FontAwesomeIcon className="text-slate-400" size="2x" icon={faChevronCircleRight} />
-                        </button>
+                    <div className="w-full flex items-center justify-center mt-14 space-x-2" >
+
+                        <button onClick={handelGetPrevCarouselPageination} ><FontAwesomeIcon className="text-slate-400" size="2x"  icon={faChevronCircleLeft}/></button>
+                        <button onClick={handelGetNextCarouselPageination}><FontAwesomeIcon  className="text-slate-400" size="2x" icon={faChevronCircleRight}/></button>
                     </div>
                     <div className="w-full flex items-center justify-center">
-                        {Array.from({ length: totalPage }, (_, i) => i + 1).map((page) => (
-                            <div key={page} className={`m-2 border-2 border-customColor-blue rounded-full text-center p-2 ${page === 1 ? 'border-t-4' : ''}`}>{page}</div>
-                        ))}
+                                {
+                                    Array.from({length: totalPage}, (_, i) => i + 1).map((page,i)=>(
+                                        <div ref={e =>{refPage.current.push(e)}} key={page} className={`${light == i? 'bg-customColor-blue text-white':''}  text-customColor-blue m-1 rounded-lg border-customColor-blue  border-x-customColor-blue text-center p-1 border-2  ${page===1?'':''}`}>{page}</div>
+                                    ))
+                                }
                     </div>
                 </div>
-                {showPopup && <Popup galleryId={galleryId} togglePopup={togglePopup} />}
             </div>
         </>
     );
@@ -107,7 +114,7 @@ function Popup({ galleryId, togglePopup }) {
     return (
         <div className="fixed top-0 w-[100%] h-[100%] bg-custom-black" style={{ zIndex: '50' }}>
            <Swiper
-                className="relative top-[20%] left-[35%]"
+                className="relative top-[20%] md:left-[35%]"
                 autoplay={{delay: 2000,disableOnInteraction: false, }}
                 modules={[Autoplay, Navigation, Pagination]} 
                 slidesPerView={1}
@@ -129,9 +136,9 @@ function Popup({ galleryId, togglePopup }) {
                         </SwiperSlide>
                     ))}
 
-                <div className="swiper-pagination absolute bottom-0 text-white font-extrabold left-[15%]"></div>
-                <div className="swiper-button-next absolute bottom-28 right-16 z-10"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
-                <div className="swiper-button-prev absolute bottom-28 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
+                <div className="swiper-pagination absolute bottom-0 text-white font-extrabold left-[50%] md:left-[15%]"></div>
+                <div className="swiper-button-next absolute bottom-0 left-0  z-10"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
+                <div className="swiper-button-prev absolute bottom-0 right-0 md:left-96 z-10"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
         
                 </Swiper>
                 <FontAwesomeIcon
@@ -142,3 +149,4 @@ function Popup({ galleryId, togglePopup }) {
         </div>
     );
 }
+
