@@ -48,6 +48,7 @@ function CarouselHeader(){
         className={`h-full relative` } 
         direction='vertical' 
         autoplay={{delay: 2000,disableOnInteraction: false, }}
+        loop={true}
         modules={[Autoplay, Navigation, Pagination]}  
         pagination={{
             el:".swiper-pagination",
@@ -63,16 +64,16 @@ function CarouselHeader(){
                                 <SwiperSlide key={index + 10}>
                                     <img className={`z-0 absolute object-cover w-full h-[100%]`} src={`${BACKEND_SERVER}/uploads/${c?.car_img}`}/>
                                     <div className={`h-full bg-custom-black relative`}></div>
-                                    <p className="px-40 md:px-60 w-full absolute bottom-32 text-2xl md:text-2xl text-center text-white  font-bold md:font-extrabold">{<div dangerouslySetInnerHTML={{__html:c?.car_title}}>{}</div>}</p>
-                                    <a className="absolute bottom-4 left-[35%] md:left-[41%] py-4  px-16 z-10 bg-customColor-blue rounded-full w-fit text-lg  car_link font-bold text-white  hover:border-2 hover:border-customColor-blue hover:bg-transparent transform transition-transform duration-200 ease-in-out hover:-translate-y-0.5  hover:cursor-pointer" href={`${c?.car_link}`}>learn more</a>
+                                    <p className="px-10 md:px-60 w-full absolute bottom-24 md:bottom-32 text-2xl md:text-2xl text-center text-white  font-bold md:font-extrabold">{<div dangerouslySetInnerHTML={{__html:c?.car_title}}>{}</div>}</p>
+                                    <a className="absolute bottom-4 left-[25%] md:left-[41%] py-4  px-16 z-10 bg-customColor-blue rounded-full w-fit text-lg  car_link font-bold text-white  hover:border-2 hover:border-customColor-blue hover:bg-transparent transform transition-transform duration-200 ease-in-out hover:-translate-y-0.5  hover:cursor-pointer" href={`${c?.car_link}`}>learn more</a>
                                 </SwiperSlide>
 
                     )
                     )
                 }
                 <div className="swiper-pagination" style={{right:'3%'}}></div>
-                <div className="swiper-button-next absolute bottom-28 right-16 z-10"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
-                <div className="swiper-button-prev absolute bottom-28 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
+                <div className="swiper-button-next absolute bottom-28 right-16 z-10 hidden md:flex"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
+                <div className="swiper-button-prev absolute bottom-28 right-3 z-10 hidden md:flex"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
         </Swiper>
         </>
     );
@@ -93,8 +94,8 @@ function AboutUs(){
         <>
             <div className='flex flex-col w-full px-20 md:w-2/4 relative md:left-1/4 my-10'>
                     <h2 data-aos="fade-up" data-aos-duration="1000" className='text-start text-xl'><FontAwesomeIcon className='text-customColor-green' icon={faAngleDoubleRight}/>About Us</h2><br/>
-                    <h3 data-aos="fade-up" data-aos-duration="1000" className='text-start text-2xl font-extrabold'>{ <div dangerouslySetInnerHTML={{ __html: justGetOne?.car_title }} /> }</h3><br/>
-                    <p data-aos="fade-up" data-aos-duration="1000" className='text-start text-2xl'>
+                    <h3 data-aos="fade-up" data-aos-duration="1000" className='text-start text-lg md:text-2xl font-extrabold'>{ <div dangerouslySetInnerHTML={{ __html: justGetOne?.car_title }} /> }</h3><br/>
+                    <p data-aos="fade-up" data-aos-duration="1000" className='text-start text-lg md:text-2xl'>
                       {<div dangerouslySetInnerHTML={{ __html: justGetOne?.car_content }} />}
                     </p>
                     <br/>
@@ -111,21 +112,21 @@ function AboutUs(){
 function Numbers(){
     return(
         <>
-            <div data-aos="fade-up" data-aos-duration="3000" data-aos-delay="5000" className='w-full px-20 md:w-2/3 relative md:left-1/4'>
+            <div data-aos="fade-up" data-aos-duration="3000" data-aos-delay="5000" className='w-full px-10 md:px-20 md:w-2/3 relative md:left-1/4'>
                 <h2 className='text-start text-xl'><FontAwesomeIcon className='text-customColor-green' icon={faAngleDoubleRight}/>Entlaq in Numbers</h2><br/>
                 <img  src={map} className='animate-bounce'/>
-                <div className='flex mt-3'>
-                    <div className='border-r-2 border-t-2 p-6'>
+                <div className='flex my-10 space-x-2'>
+                    <div className='md:border-r-2 md:border-t-2 md:p-6'>
                         <h4 className='text-2xl md:text-4xl text-customColor-blue font-extrabold'><CountUp start={0} end={800} duration={3} delay={3} ></CountUp></h4>
-                        <p className='ml-6  textlg md:text-2xl'>Network of<br/>startups</p>
+                        <p className='ml-6  text-sm md:text-2xl'>Network of<br/>startups</p>
                     </div>
-                    <div className='border-r-2 border-t-2  p-6'>
+                    <div className='md:border-r-2 md:border-t-2  md:p-6'>
                         <h4 className='text-2xl md:text-4xl text-customColor-blue font-extrabold'><CountUp start={0} end={7} duration={3} delay={3} ></CountUp>+</h4>
-                        <p className='ml-6 text-lg md:text-2xl'>Global<br/>Partnerships</p>
+                        <p className='ml-6 text-sm md:text-2xl'>Global<br/>Partnerships</p>
                     </div>
-                    <div className=' border-t-2  p-6'>
+                    <div className='md:border-t-2  md:p-6'>
                         <h4 className='text-2xl md:text-4xl text-customColor-blue font-extrabold'><CountUp start={0} end={22} duration={3} delay={3} ></CountUp>+</h4>
-                        <p className='ml-6 text-lg md:text-2xl'>Government<br/>Partnerships</p>
+                        <p className='ml-6 text-sm md:text-2xl'>Government<br/>Partnerships</p>
                     </div>
                 </div>
             </div> 
@@ -217,7 +218,10 @@ function StepperServices() {
     <>
       <div className='bg-customColor-blue flex flex-col'>
         <Swiper
+          modules={[Autoplay, Navigation, Pagination]} 
+          autoplay={{delay: 2000,disableOnInteraction: false, }}
           className='w-full'
+          loop ={true}
           effect="coverflow"
           coverflowEffect={{
             rotate: 50,
@@ -252,7 +256,7 @@ function StepperServices() {
                 </div>
                 <div className='flex w-full mt-4 items-center justify-center'>
                   <div key={index} className='w-1/3 flex items-center justify-center text-center text-white font-extrabold'>
-                    {serv.car_title}
+                    <div dangerouslySetInnerHTML={{__html:serv.car_title}}></div>
                   </div>
                 </div>
               </SwiperSlide>
@@ -319,13 +323,13 @@ function OurServices(){
             <div  data-aos="fade-up" data-aos-duration="1000" data-aos-delay="4000" className='flex flex-col md:flex-row w-full'>
 
                   <div className='w-full md:w-1/2 md:border-r-2'>
-                          <h1 className='text-customColor-blue text-3xl md:text-4xl font-extrabold mt-7'>Upskilling &<br/>Investment Promotion</h1>
+                          <h1 className='text-customColor-blue text-2xl md:text-4xl font-extrabold mt-7'>Upskilling &<br/>Investment Promotion</h1>
                           <div className='flex flex-col items-start'>
                               {
                                 our_services.map((s)=>{
                                   return(
                                     <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="2000" className='flex items-center justify-center my-5'>
-                                          <img className='size-44' src={s.icon} alt={s.icon} />
+                                          <img className='size-44 animate-bounce' src={s.icon} alt={s.icon} />
                                           <p className='ml-4 text-customColor-blue text-xl font-extrabold'>
                                               {s.title.split('\n').map((line, index) => (
                                                 <React.Fragment key={index}>
@@ -342,7 +346,7 @@ function OurServices(){
             </div>
                   </div>
                   <div className='w-full md:w-1/2 '>
-                          <h1 className='ml-28 text-start text-customColor-blue text-3xl md:text-4xl font-extrabold mt-20 md:mt-7'>Entlaq<br/>Programs’ Partners</h1>
+                          <h1 className='md:ml-28 text-start text-customColor-blue text-3xl md:text-4xl font-extrabold mt-20 md:mt-7'>Entlaq<br/>Programs’ Partners</h1>
 
                           <Swiper
                           autoplay={{delay: 2000,disableOnInteraction: false, }}
@@ -355,12 +359,14 @@ function OurServices(){
                                 {
                                   partners.map((p)=>(
                                     <SwiperSlide key={p?.id}>
-                                      <img  src={`${BACKEND_SERVER}/uploads/${p.car_img}`}/>
+                                        <div className='flex items-center justify-center'>
+                                           <img  className='size-96' src={`${BACKEND_SERVER}/uploads/${p.car_img}`}/>
+                                        </div>
                                     </SwiperSlide>
                                   ))
                                 }
-                                 <div className="swiper-button-next absolute bottom-28 right-16 z-10"><FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleLeft}/></div>
-                                <div className="swiper-button-prev absolute bottom-28 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleRight}/></div>
+                                 <div className="swiper-button-next absolute bottom-1  md:bottom-2 right-16 z-10"><FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleLeft}/></div>
+                                <div className="swiper-button-prev absolute bottom-1 md:bottom-2 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleRight}/></div>
                           </Swiper>
 
                   </div>
@@ -407,10 +413,10 @@ function News(){
                     slideShadows: false,
                 }
               }
-              initialSlide={2}
+              initialSlide={3}
               breakpoints={{
-                500: {
-                  slidesPerView: 2,
+                400: {
+                  slidesPerView: 1,
                   
                 },
                 // when window width is >= 768px (tablet)
@@ -433,13 +439,13 @@ function News(){
                                   news.map((p)=>(
                                     <SwiperSlide key={p?.id} className=''>
                                       <img className='size-96 shadow-lg' src={`${BACKEND_SERVER}/uploads/${p.car_img}`}/>
-                                      <h1 className='text-center mt-6'>{p.car_title}</h1>
+                                      <h1 className='text-center mt-6'>{<div dangerouslySetInnerHTML={{__html:p.car_title}}></div>}</h1>
                                     </SwiperSlide>
                                   ))
                 }
-                 <div className="swiper-pagination" style={{bottom:'10%'}}></div>
+                 <div className="swiper-pagination" style={{bottom:'11%'}}></div>
                 <div className="swiper-button-prev absolute bottom-6 left-1/2 z-10"> <FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleRight}/></div>
-                <div className="swiper-button-next absolute bottom-6 left-[45%] md:left-[47%] z-10"><FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleLeft}/></div>
+                <div className="swiper-button-next absolute bottom-6 left-[40%] md:left-[47%] z-10"><FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleLeft}/></div>
         
        </Swiper>
     </>
@@ -461,8 +467,9 @@ function Testimonials(){
           <h3 className='text-start text-2xl relative left-[10%] md:left-[20%] font-extrabold'>Notes about <br/> Entlaq</h3><br/>
 
           <Swiper
-                className='w-full  md:w-[60%]'
+                className='w-full  md:w-[60%] h-[90vh] md:h-[50vh]'
                  autoplay={{delay: 2000,disableOnInteraction: false, }}
+                 loop={true}
                  modules={[Autoplay, Navigation, Pagination]}  
                  pagination={{
                      el:".swiper-pagination",
@@ -481,7 +488,7 @@ function Testimonials(){
                                 <div className='flex flex-col md:flex-row-reverse'>
                                     <div className="mx-5">
                                         <i className="fa-solid fa-quote-left text-1xl lg:text-3xl text-blue-700  animate-bounce" style={{textShadow:'10px -10px 2px rgba(0, 0, 255, 0.2);'}}></i><br/>
-                                        <p  className='inline  text-base lg:text-1xl px-2' style={{lineHeight:'0.9cm'}}> {car?.car_content}</p>
+                                        <p  className='inline  text-base lg:text-1xl px-2' style={{lineHeight:'0.9cm'}}> {<div dangerouslySetInnerHTML={{__html:car?.car_content?.slice(0,360)}}></div>}</p>
                                         <i className="fa-solid fa-quote-right text-1xl lg:text-3xl  text-blue-700 animate-bounce" style={{textShadow:'10px 10px 2px rgba(0, 0, 255, 0.2);'}}></i>
                                     </div>                              
                                     <div className='flex items-end justify-end'>
@@ -491,7 +498,7 @@ function Testimonials(){
                                                     <div className='size-8 bg-blue-500 absolute -bottom-10 -left-4 z-0 hidden lg:flex animate-bounce'></div>
                                                     <img className='rounded-full md:rounded-sm w-36 h-36  md:w-full md:h-full z-10 shadow-[4px_4px_5px_1px_rgba(0,0,0,0.3)]' src={`${BACKEND_SERVER}/uploads/${car?.car_img}`}/>
                                                 </div>
-                                          <h1 className='text-base md:text-lg text-customColor-green font-extrabold'>{car?.car_name}</h1>
+                                          <h1 className='text-base md:text-lg text-customColor-green font-extrabold'>{<div dangerouslySetInnerHTML={{__html:car?.car_name}}></div>}</h1>
                                           <h1 className='text-sm md:text-base w-52'>{<div dangerouslySetInnerHTML={{__html:car?.car_job}}/>}</h1>
                                         </div>
                                     </div>
@@ -499,9 +506,9 @@ function Testimonials(){
                             </SwiperSlide>
                     ))
                   }
-                     <div className="swiper-pagination" style={{bottom:'10%'}}></div>
-                    <div className="swiper-button-prev absolute bottom-1 left-1/2 z-10"> <FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleRight}/></div>
-                    <div className="swiper-button-next absolute bottom-1 left-[43%] md:left-[47%] z-10"><FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleLeft}/></div>
+                     <div className="swiper-pagination " style={{ bottom:'10%'}}></div>
+                    <div className="swiper-button-prev absolute bottom-1 left-1/2 z-10 hidden md:flex"> <FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleRight}/></div>
+                    <div className="swiper-button-next absolute bottom-1 left-[43%] md:left-[44%] z-10 hidden md:flex"><FontAwesomeIcon size='2x' className='text-slate-400' icon={faChevronCircleLeft}/></div>
         
               </Swiper>
 
@@ -548,6 +555,15 @@ function EntlaqPartners(){
                 disableOnInteraction: false,
 
               }}
+              breakpoints={{
+                400:{
+                    slidesPerView:5
+                },
+                750:{
+                  slidesPerView:8
+                }
+
+              }}  
             >
                    {
                       carousel?.map((car)=>(
@@ -573,7 +589,7 @@ export default function Home(){
     return(
         <>
         {/* Header */}
-            <section className='flex h-[88vh]'>
+            <section className='flex h-[70vh] md:h-[88vh]'>
                 <div className='hidden md:flex w-1/3 h-full bg-customColor-blue flex items-center justify-center '>
                     <h1 data-aos="fade-up" data-aos-duration="2000" className='text-white font-extrabold  text-3xl lg:text-4xl  text-center'>“Pushing the boundries<br/>of Egypt’s <span className="text-customColor-green">innovation</span>”</h1>
                 </div>

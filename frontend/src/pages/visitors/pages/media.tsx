@@ -32,7 +32,7 @@ function CarouselHeader(){
         <Swiper 
         data-aos="fade-left" data-aos-duration="1000" data-aos-delay="1000"
 
-        className={`h-[88vh] relative` } 
+        className={`h-[70vh] md:h-[88vh]relative` } 
         direction='vertical' 
         autoplay={{delay: 2000,disableOnInteraction: false, }}
         modules={[Autoplay, Navigation, Pagination]}  
@@ -55,11 +55,11 @@ function CarouselHeader(){
                     )
                     )
                 }
-                <h1 className='text-white font-extrabold text-3xl md:text-5xl  text-center absolute top-1/2 left-[25%] md:left-[35%] z-10'>“Pushing the boundries<br/>of Egypt’s <span className="text-customColor-green">innovation</span>”</h1>
+                <h1 className='text-white font-extrabold text-3xl md:text-5xl  text-center absolute top-1/2 left-[10%] md:left-[35%] z-10'>“Pushing the boundries<br/>of Egypt’s <span className="text-customColor-green">innovation</span>”</h1>
                 <div className="swiper-pagination" style={{right:'3%'}}></div>
-                <div className="swiper-button-next absolute bottom-28 right-16 z-10"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
-                <div className="swiper-button-prev absolute bottom-28 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
-        </Swiper>
+                <div className="swiper-button-next absolute bottom-28 right-16 z-10 hidden md:flex"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
+                <div className="swiper-button-prev absolute bottom-28 right-3 z-10 hidden md:flex"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
+       </Swiper>
         </>
     );
 }
@@ -114,7 +114,7 @@ function News(){
                                 carousel?.map((car)=>(
                                     <div key={car.id} className="w-full md:w-[30%]  bg-customColor-blue mt-6 md:m-6 shadow-2xl rounded-2xl">
                                             <img className="w-full h-96 object-cover rounded-t-2xl" src={`${BACKEND_SERVER}/uploads/${car?.car_img}`}/>
-                                            <h2 className="p-6 text-center text-white text-xl font-bold mt-2">{car?.car_title}</h2>    
+                                            <h2 className="p-6 text-center text-white text-xl font-bold mt-2">{<div dangerouslySetInnerHTML={{__html:car?.car_title}}></div>}</h2>    
                                     </div>
                                 ))
                             }

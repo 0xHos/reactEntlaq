@@ -31,7 +31,7 @@ function CarouselHeader(){
         <Swiper 
         data-aos="fade-left" data-aos-duration="1000" data-aos-delay="1000"
 
-        className={`h-[88vh] relative` } 
+        className={`h-[70vh] md:h-[88vh] relative` } 
         direction='vertical' 
         autoplay={{delay: 2000,disableOnInteraction: false, }}
         modules={[Autoplay, Navigation, Pagination]}  
@@ -54,11 +54,11 @@ function CarouselHeader(){
                     )
                     )
                 }
-                <h1 className='text-white font-extrabold text-3xl md:text-5xl  text-center absolute top-1/2 left-[25%] md:left-[35%] z-10'>“Pushing the boundries<br/>of Egypt’s <span className="text-customColor-green">innovation</span>”</h1>
+                <h1 className='text-white font-extrabold text-3xl md:text-5xl  text-center absolute top-1/2 left-[10%] md:left-[35%] z-10'>“Pushing the boundries<br/>of Egypt’s <span className="text-customColor-green">innovation</span>”</h1>
                 <div className="swiper-pagination" style={{right:'3%'}}></div>
-                <div className="swiper-button-next absolute bottom-28 right-16 z-10"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
-                <div className="swiper-button-prev absolute bottom-28 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
-        </Swiper>
+                <div className="swiper-button-next absolute bottom-28 right-16 z-10 hidden md:flex"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
+                <div className="swiper-button-prev absolute bottom-28 right-3 z-10 hidden md:flex"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
+       </Swiper>
         </>
     );
 }
@@ -96,7 +96,9 @@ function MessageCEO(){
     },[]);
     return(
         <>
-            <p className="font-extrabold text-center text-1xl md:text-5xl  text-customColor-blue p-12 bg-white">A Message from  Entlaq’s CEO</p>
+           <div className="mt-32 md:mt-0">
+
+           <p className="font-extrabold text-center text-lg md:text-5xl  text-customColor-blue p-12 bg-white">A Message from  Entlaq’s CEO</p>
 <div className="flex flex-col md:flex-row  md:flex-wrap bg-gray-100 wow animate__animated animate__slideInUp pb-10">
     {/* <!-- img --> */}
     <div className='w-full flex items-center justify-center lg:w-1/3 '>
@@ -127,13 +129,14 @@ function MessageCEO(){
 
     
     <p className="w-full md:w-2/3  text-base py-10 p-4 md:text-2xl md:p-2 md:mt-6">
-            {carousel[0]?.car_content}
+            {<div dangerouslySetInnerHTML={{__html:carousel[0]?.car_content}}></div>}
     </p>
    </div>
         
 
 </div>
 
+           </div>
       
                    
         </>
@@ -157,10 +160,10 @@ function CoFounders(){
     const Popup = ({img,title,content})=>{
         return(
             <div className="fixed top-0 w-[100%] h-[100%] bg-custom-black" style={{zIndex:'50'}}>
-                <div className="bg-white flex flex-col items-center justify-center m-6 md:m-60 p-10 rounded-lg">
+                <div className="relative bg-white flex flex-col items-center justify-center m-6 mt-52 md:m-60 p-10 rounded-lg">
                     <img className="size-40 rounded-full" src={`${BACKEND_SERVER}/uploads/${joker?.img}`}/>
-                    <h1 className="font-extrabold">{title}</h1>
-                    <p>{content}</p>
+                    <h1 className="font-extrabold">{<div dangerouslySetInnerHTML={{__html:title}}></div>}</h1>
+                    <p>{<div dangerouslySetInnerHTML={{__html:content}}></div>}</p>
                     <FontAwesomeIcon onClick={()=>{setShowPopup(!showPopup)}} className="bg-red-800 text-white p-5 absolute top-0 right-0" icon={faClose}/>
                 </div>
             </div>
@@ -235,7 +238,8 @@ function CoFounders(){
   
     return(
         <>
-   
+               {showPopup?<Popup img={joker?.img} title={joker?.title} content={joker?.content} />:null}
+
 
 <div id="co-founder" className="">
     <p className="p-12 bg-white  text-customColor-green font-extrabold text-2xl md:text-5xl text-center">Meet Our Co-founders</p>
@@ -252,15 +256,14 @@ function CoFounders(){
                      </div>
 
                     <div>
-                        <p id="" className={`text-center font-extrabold text-lg ${c.nColor}`}><a href={c.linkdin}>{c.name}</a> </p>
-                        <p className={`w-full text-center text-lg ${c.jobColor}`}>{c.job}</p>
+                        <p id="" className={`text-center font-extrabold text-lg ${c.nColor}`}><a href={c.linkdin}>{<div dangerouslySetInnerHTML={{__html:c.name}}></div>}</a> </p>
+                        <p className={`w-full text-center text-lg ${c.jobColor}`}>{<div dangerouslySetInnerHTML={{__html:c.job}}></div>}</p>
                     </div>
                 </div>
             </>
         ))}
             
            
-            {showPopup?<Popup img={joker?.img} title={joker?.title} content={joker?.content} />:null}
     </div>
 </div>
         
@@ -280,10 +283,10 @@ function Team(){
     const Popup = ({img,title,content})=>{
         return(
             <div className="fixed top-0 w-[100%] h-[100%] bg-custom-black" style={{zIndex:'50'}}>
-                <div className="bg-white flex flex-col items-center justify-center m-6 md:m-60 p-10 rounded-lg">
+                <div className="relative bg-white flex flex-col items-center justify-center m-6 mt-60 md:m-60 p-10 rounded-lg">
                     <img className="size-40 rounded-full" src={`${BACKEND_SERVER}/uploads/${joker?.img}`}/>
-                    <h1 className="font-extrabold">{title}</h1>
-                    <p>{content}</p>
+                    <h1 className="font-extrabold">{<div dangerouslySetInnerHTML={{__html:title}}></div>}</h1>
+                    <p>{<div dangerouslySetInnerHTML={{__html:content}}></div>}</p>
                     <FontAwesomeIcon onClick={()=>{setShowPopup(!showPopup)}} className="bg-red-800 text-white p-5 absolute top-0 right-0" icon={faClose}/>
                 </div>
             </div>
@@ -305,6 +308,7 @@ function Team(){
 
     return(
         <>
+        {showPopup?<Popup img={joker?.img} title={joker?.title} content={joker?.content} />:null}
             <div id="team">
             <p className="p-12  text-customColor-blue font-extrabold  text-3xl md:text-5xl text-center">Meet the Team</p>
             <div className="flex flex-col md:flex-wrap md:flex-row space-y-20 md:space-y-0 w-full wow animate__animated animate__lightSpeedInRight">
@@ -319,14 +323,13 @@ function Team(){
                         <img onClick={handelPopup} data-info={`${car?.car_img};${car?.car_name};${car?.car_content}`} src={`${BACKEND_SERVER}/uploads/${car?.car_img}`}   className='car_img object-left-bottom rounded-full md:rounded-none md:rounded-tl-3xl md:rounded-br-3xl z-50 relative shadow-none border-2 border-white md:shadow-2xl md:shadow-black w-24 h-24 md:w-56 md:h-64 group-hover:z-0'/>
                     </div>
                     <div>
-                        <p className="text-center font-bold text-lg text-customColor-blue"> <a href={car?.car_link}>{car?.car_name}</a></p>
-                        <p className="text-center text-sm text-customColor-blue">{car?.car_job}</p>
+                        <p className="text-center font-bold text-lg text-customColor-blue"> <a href={car?.car_link}>{<div dangerouslySetInnerHTML={{__html:car?.car_name}}></div>}</a></p>
+                        <p className="text-center text-sm text-customColor-blue">{<div dangerouslySetInnerHTML={{__html:car?.car_job}}></div>}</p>
                     </div>
                 </div>
                 ))
                }
               
-              {showPopup?<Popup img={joker?.img} title={joker?.title} content={joker?.content} />:null}
 
             </div>
             </div>

@@ -40,17 +40,17 @@ function CarouselHeader(){
                               <SwiperSlide key={index + 10}>
                                   <img className={`z-0 absolute object-cover w-full h-[100%]`} src={`${BACKEND_SERVER}/uploads/${c.car_img}`}/>
                                   <div className={`h-full bg-custom-black relative`}></div>
-                                  <p className="px-40 md:px-60 w-full absolute bottom-32 text-2xl md:text-2xl text-center text-white  font-bold md:font-extrabold">{c.car_title}</p>
-                                  <a className="absolute bottom-4 left-[35%] md:left-[41%] py-4  px-16 z-10 bg-customColor-blue rounded-full w-fit text-lg  car_link font-bold text-white  hover:border-2 hover:border-customColor-blue hover:bg-transparent transform transition-transform duration-200 ease-in-out hover:-translate-y-0.5  hover:cursor-pointer" href={`${c.car_link}`}>learn more</a>
-                              </SwiperSlide>
+                                  <p className="px-10 md:px-60 w-full absolute bottom-24 md:bottom-32 text-2xl md:text-2xl text-center text-white  font-bold md:font-extrabold">{<div dangerouslySetInnerHTML={{__html:c?.car_title}}>{}</div>}</p>
+                                  <a className="absolute bottom-4 left-[25%] md:left-[41%] py-4  px-16 z-10 bg-customColor-blue rounded-full w-fit text-lg  car_link font-bold text-white  hover:border-2 hover:border-customColor-blue hover:bg-transparent transform transition-transform duration-200 ease-in-out hover:-translate-y-0.5  hover:cursor-pointer" href={`${c?.car_link}`}>learn more</a>
+                               </SwiperSlide>
 
                   )
                   )
               }
-              <div className="swiper-pagination" style={{right:'3%'}}></div>
-              <div className="swiper-button-next absolute bottom-28 right-16 z-10"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
-              <div className="swiper-button-prev absolute bottom-28 right-3 z-10"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
-      </Swiper>
+                 <div className="swiper-pagination" style={{right:'3%'}}></div>
+                <div className="swiper-button-next absolute bottom-28 right-16 z-10 hidden md:flex"><FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleLeft}/></div>
+                <div className="swiper-button-prev absolute bottom-28 right-3 z-10 hidden md:flex"> <FontAwesomeIcon size='2x' className='text-customColor-button' icon={faChevronCircleRight}/></div>
+       </Swiper>
       </>
   );
 }
@@ -277,7 +277,7 @@ function StepperResearchProducts(){
           }}
           breakpoints={{
             // when window width is >= 640px (phone)
-            500: {
+            400: {
               slidesPerView: 1,
             },
             // when window width is >= 768px (tablet)
@@ -296,13 +296,14 @@ function StepperResearchProducts(){
                   </div>
                 </div>
                 <div className='flex w-full mt-4 items-center justify-center'>
-                  <div key={index} className='w-1/2 flex  flex-col items-center justify-center font-extrabold'>
-                    <h1 className="text-customColor-blue text-2xl">{serv.car_title}</h1><br/>
+                  <div key={index} className='mx-3 md:mx-0 md:w-1/2 flex  flex-col items-center justify-center font-extrabold'>
+                    <h1 className="text-customColor-blue text-2xl">{<div dangerouslySetInnerHTML={{__html:serv.car_title}}></div>}</h1><br/>
                     <p className="font-normal ">
-                        {serv?.car_content}
+                        {<div dangerouslySetInnerHTML={{__html:serv.car_content}}></div>}
                     </p>
                     <div className="flex items-start w-full mt-10">
-                        <a  href={serv?.car_link}>{serv?.car_link_text}</a>
+                        <a  href={serv?.car_link}>{serv?.car_link_text?.replace(/<[^>]*>/g, '')
+                        }</a>
                     </div>
                   </div>
 
@@ -353,6 +354,14 @@ function OurAdvisoryClients(){
                   disableOnInteraction: false,
   
                 }}
+                breakpoints={{
+                  400:{
+                    slidesPerView:5
+                  },
+                  768:{
+                    slidesPerView:7
+                  }
+                }}
               >
                      {
                         carousel?.map((car)=>(
@@ -376,7 +385,7 @@ export default function Advisory(){
     return(
         <>
              {/* Header */}
-             <section className='flex h-[88vh]'>
+             <section className='flex  h-[70vh] md:h-[88vh]'>
              <div className='hidden md:flex w-1/3 h-full bg-customColor-blue flex items-center justify-center '>
                   <h1 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000" className='text-white font-extrabold  text-3xl lg:text-4xl  text-center'>“Pushing the boundries<br/>of Egypt’s <span className="text-customColor-green">innovation</span>”</h1>
                 </div>

@@ -59,7 +59,7 @@ async function  insertAboutUs(){
 
 async function initInfo(){
     await createAdmin();
-    // await insertAboutUs();
+    await insertAboutUs();
 }
 
 

@@ -143,18 +143,18 @@ export const  PageOptionDropdown = [
         show_name: 'Partners',
         value: 'partners',
         input:[
-          {
-            type:'text',
-            name:'car_title',
-            show_name:'Title'
+          // {
+          //   type:'text',
+          //   name:'car_title',
+          //   show_name:'Title'
 
-          },
-          {
-            type:'text',
-            name:'car_content',
-            show_name:'Content'
+          // },
+          // {
+          //   type:'text',
+          //   name:'car_content',
+          //   show_name:'Content'
 
-          }
+          // }
         ]
       }
     ],
