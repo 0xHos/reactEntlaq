@@ -84,7 +84,7 @@ const PopupForm = ({galleryId,showPopup})=>{
                   >
                     First Name
                   </label>
-                  <input
+                  <input required 
                     type="text"
                     id="first-name"
                     name="first_name"
@@ -101,7 +101,7 @@ const PopupForm = ({galleryId,showPopup})=>{
                   >
                     Last Name
                   </label>
-                  <input
+                  <input required
                     type="text"
                     id="last-name"
                     name="last_name"
@@ -117,7 +117,7 @@ const PopupForm = ({galleryId,showPopup})=>{
                   >
                     Phone
                   </label>
-                  <input
+                  <input required
                     type="text"
                     id="last-name"
                     name="phone"
@@ -133,7 +133,7 @@ const PopupForm = ({galleryId,showPopup})=>{
                   >
                     position
                   </label>
-                  <input
+                  <input required
                     type="text"
                     id="last-name"
                     name="position"
@@ -150,7 +150,7 @@ const PopupForm = ({galleryId,showPopup})=>{
                   >
                     Email
                   </label>
-                  <input
+                  <input required
                     type="email"
                     id="email"
                     name="email"

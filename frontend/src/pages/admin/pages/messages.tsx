@@ -48,8 +48,7 @@ export default function Messages() {
 
     const fetchMessages = async () => {
         const res = await getData(`${BACKEND_SERVER}/api/messages`, sessionStorage.getItem("token") || "");
-        setMessages(res);
-        console.log(messages);
+        setMessages(res?.reverse());
     };
 
     useEffect(() => {
@@ -59,6 +58,7 @@ export default function Messages() {
     return (
         <div className="container mx-auto p-4">
             <div className="overflow-x-auto">
+                <strong>Messages:</strong> {messages.length}
                 <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                         <tr>

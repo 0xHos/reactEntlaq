@@ -100,6 +100,8 @@ export function Navbar(){
                                 }   
 
                         </ul>
+                        <a href="/Contact-Us" className="text-blue-900 block md:hidden mt-9">Contact Us</a>
+
                     </div>
                        
                 </div>

@@ -11,7 +11,6 @@ export default function Subscription(){
     const handleDelete = async(id)=>{
         
         const deleteEndpoint = `${BACKEND_SERVER}/api/users/users_sub/${id}`;
-        console.log(deleteEndpoint);
         const token = sessionStorage.getItem("token")||'';
 
         try{
@@ -27,8 +26,8 @@ export default function Subscription(){
 
     useEffect(()=>{
         async function fetchUsersSub(){
-                const res = await getData(`${BACKEND_SERVER}/api/users/users_sub`, sessionStorage.getItem("token") || "")
-                setUsers(res.users);
+                const res = await getData(`${BACKEND_SERVER}/api/users/users_sub`, sessionStorage?.getItem("token") || "")
+                setUsers(res?.users?.reverse());
         }
 
 
@@ -38,6 +37,7 @@ export default function Subscription(){
     return(
         <>
                <div className="overflow-x-auto">
+               <strong>Subscription:</strong> {users?.length}
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
