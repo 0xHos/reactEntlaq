@@ -9,35 +9,41 @@ import { Autoplay,Navigation,Pagination ,EffectCoverflow } from 'swiper/modules'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft, faChevronCircleRight, faClose, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 
+const Playvideo = ({videoId})=>{
+    return(
+        <>
+            <video controls autoPlay  src={`${BACKEND_SERVER}/uploads/${videoId}`}></video>
+        </>
+    );
+}
 
 
-const PopupVideo = ({galleryId,showPopup ,setShowPopup})=>{
-    const [video_report_header , set_video_report_header] = useState("");
-    const {getData}= useAxiosGetData();
+const PopupVideo = ({videoId,showPopup ,setShowPopup})=>{
+    // const [video_report_header , set_video_report_header] = useState("");
+    // const {getData}= useAxiosGetData();
 
-    useEffect(()=>{
-        async function fetchVedio() {
-            const res  = await getData(`${BACKEND_SERVER}/api/gallery/${galleryId}`,"");
-            res?.map((r)=>{
-                if(r.section == 'video_report_header'){
-                    console.log(r.car_img);
-                    set_video_report_header(r?.car_img);
-                }
-            })
-        }
-        fetchVedio();
-    },[])
+    // useEffect(()=>{
+    //     async function fetchVedio() {
+    //         const res  = await getData(`${BACKEND_SERVER}/api/gallery/${galleryId}`,"");
+    //         res?.map((r)=>{
+    //             if(r.section == 'video_report_header'){
+    //                 console.log(r.car_img);
+    //                 set_video_report_header(r?.car_img);
+    //             }
+    //         })
+    //     }
+    //     fetchVedio();
+    // },[])
 
     return(
        <>
         {
             showPopup? 
-            <div className="fixed top-0 h-screen w-screen bg-custom-black" style={{zIndex:'50'}}>
-                <div className="size-96 bg-white flex flex-col items-center justify-center m-6 md:m-60 p-10 rounded-lg">
-                        <video controls>
-                        <source src={`${BACKEND_SERVER}/uploads/${video_report_header}`} type="video/mp4" />
-                        Your browser does not support the video tag.
-                        </video>
+            <div className="fixed top-0 w-screen h-screen bg-custom-black md:p-96" style={{zIndex:'100'}}>
+                <div className="w-full h-full  flex flex-col items-center justify-center m-6 rounded-lg">
+                    <div className="">
+                        <Playvideo videoId={videoId}  />
+                    </div>
                     <FontAwesomeIcon onClick={()=>{setShowPopup(!showPopup)}} className="bg-red-800 text-white p-5 absolute top-[15%] right-[5%]" icon={faClose}/>
                 </div>
             </div>
@@ -184,8 +190,6 @@ const Header = ()=> {
     const [showPopup,setShowPopup] = useState(false);
     const [showPopupReoportForm,setShowPopupReoportForm] = useState(false);
 
-
-useEffect(() => {
     async function fetchData() {
         const res  = await getData(`${ENDPOINT_CAROUSEL}/report/header/${id}`,"");
         setCrsouel(res?.carousels);
@@ -193,24 +197,25 @@ useEffect(() => {
     async function fetchDataGallery() {
         const res  = await getData(`${BACKEND_SERVER}/api/gallery/${id}`,"");
         setReports(res);
-        reports.map((r)=>{
-            console.log(r);
-            if(r.section == "video_report_header"){
-                    set_video_report_header(r.car_img)
-            }else if(r.section == "report_report_header"){
-                    set_report_report_header(r.car_img);
-            }
-        })
     }
 
+
+useEffect(() => {
+  
     fetchData();
     fetchDataGallery();
+
 }, []);
 
-
-
-
-
+    const showPopupVideo = ()=>{
+        reports.map(r=>{
+            if(r.section == 'video_report_header'){
+                console.log(r.car_img);
+                set_video_report_header(r?.car_img);
+            }
+        })
+        setShowPopup(!showPopup)
+    }
     return(
         <>
             {showPopupReoportForm? <PopupForm showPopup={showPopupReoportForm} galleryId={id}/>:null}
@@ -225,7 +230,7 @@ useEffect(() => {
                                 <p className="mt-10  text-white"><div dangerouslySetInnerHTML={{__html:carsouel?.car_content?.slice(0,850)}}></div></p>
                                 <div className=" mt-10 space-x-5">
                                     <button className="px-16 bg-customColor-blue text-white py-5 font-bold" onClick={()=>{setShowPopupReoportForm(!showPopupReoportForm)}}>Access Report</button>
-                                    <button className="font-bold text-lg text-white" onClick={()=>{setShowPopup(!showPopup)}}> <FontAwesomeIcon size="2x" icon={faPlayCircle}/> <span className="relative bottom-2">Lanuch Video</span></button>
+                                    <button className="font-bold text-lg text-white" onClick={showPopupVideo}> <FontAwesomeIcon size="2x" icon={faPlayCircle}/> <span className="relative bottom-2">Lanuch Video</span></button>
                                 </div>
                             </div>
                             <div className="w-full xl:w-1/3">
@@ -283,7 +288,7 @@ useEffect(() => {
                     </Swiper>
                 </div>
                {
-                    showPopup?<PopupVideo galleryId={id} setShowPopup={setShowPopup} showPopup={showPopup} url={video_report_header}/>:null
+                    showPopup?<PopupVideo videoId={video_report_header} setShowPopup={setShowPopup} showPopup={showPopup} />:null
                }
             </div>
         </>
@@ -309,6 +314,11 @@ const Videos =()=>{
 
     return(
         <>
+          {
+                
+                showPopup?<PopupVideo setShowPopup={setShowPopup} showPopup={showPopup} videoId={joker}/>:null
+
+        }
             <div className="p-10">
                  <h1 className="text-center text-customColor-blue text-4xl font-extrabold my-20">Videos</h1>
 
@@ -316,7 +326,7 @@ const Videos =()=>{
                     slidesPerView={4}
                     spaceBetween={10}
                     breakpoints={{
-                        500:{
+                        400:{
                             slidesPerView:1,
                             spaceBetween:1
 
@@ -340,7 +350,7 @@ const Videos =()=>{
                              reports?.map((rep:RportOrGallery)=>(
                                 rep?.section == 'videos'?
                                     <SwiperSlide key={rep?.id }>
-                                        <div className="relative">
+                                        <div className="relative ">
                                             <video
                                              className="h-96 w-80 object-cover"
                                              src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
@@ -354,11 +364,6 @@ const Videos =()=>{
                             
                         }
                 </Swiper>
-               {
-                
-                showPopup?<PopupVideo setShowPopup={setShowPopup} showPopup={showPopup} url={`${BACKEND_SERVER}/uploads/${joker}`}/>:null
-
-               }
             </div>
         </>
     );
@@ -389,7 +394,7 @@ const Insights =()=>{
                     slidesPerView={5}
                     spaceBetween={0}
                     breakpoints={{
-                        500:{
+                        400:{
                             slidesPerView:1,
                             spaceBetween:1
 
@@ -414,7 +419,7 @@ const Insights =()=>{
                                 rep?.section == 'insights'?
                                     <SwiperSlide>
                                         <img
-                                        className="h-96 w-80"
+                                        className="h-96 w-80 rounded-2xl"
                                          key={rep?.id} 
                                          src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
                                     </SwiperSlide>
@@ -452,7 +457,7 @@ const News =()=>{
                     autoplay={true}
                     modules={[Autoplay]}
                     breakpoints={{
-                        500:{
+                        400:{
                             slidesPerView:1,
                             spaceBetween:1,
 
@@ -477,7 +482,7 @@ const News =()=>{
                                 rep?.section == 'news'?
                                     <SwiperSlide>
                                         <img
-                                        className="h-96 w-80"
+                                        className="h-96 w-80 rounded-2xl"
                                          key={rep?.id} 
                                          src={`${BACKEND_SERVER}/uploads/${rep?.car_img}`}/>
                                     </SwiperSlide>
