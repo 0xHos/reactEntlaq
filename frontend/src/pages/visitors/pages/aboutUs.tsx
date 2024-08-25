@@ -67,7 +67,7 @@ function CarouselHeader(){
 function VisionAndMission(){
     return(
         <>
-                    <div className="flex flex-col lg:flex-row h-64" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="1000">
+                    <div  id="vision_and_mission" className="flex flex-col lg:flex-row h-64" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="1000">
                         <div className="py-7 h-full w-full lg:w-1/2 bg-customColor-blue  flex flex-col justify-center items-center wow animate__animated animate__slideInLeft" data-wow-delay="0.5s" data-wow-duration="2s">
                             <h1 className="text-white text-lg md:text-4xl font-extrabold text-center">Vision</h1>
                             <p className="text-white text-center p-2">Catalyzing Egypt’s positioning as the region’s<br/> innovation hub through fostering an <span className="text-customColor-yellow font-bold">innovative</span>, <br/><span className="text-customColor-yellow font-bold">inclusive</span>, and <span className="text-customColor-yellow font-bold">impactful</span> ecosystem.</p>        
@@ -96,7 +96,7 @@ function MessageCEO(){
     },[]);
     return(
         <>
-           <div className="mt-32 md:mt-0">
+           <div id="co-msg" className="mt-32 md:mt-0">
 
            <p className="font-extrabold text-center text-lg md:text-5xl  text-customColor-blue p-12 bg-white">A Message from  Entlaq’s CEO</p>
 <div className="flex flex-col md:flex-row  md:flex-wrap bg-gray-100 wow animate__animated animate__slideInUp pb-10">

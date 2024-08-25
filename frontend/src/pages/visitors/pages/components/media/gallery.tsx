@@ -67,7 +67,7 @@ export default function Gallery() {
         <>
                         {showPopup && <Popup galleryId={galleryId} togglePopup={togglePopup} />}
 
-            <div id="news" className="">
+            <div id="gallery" className="">
                 <h1 className="text-center text-customColor-blue text-4xl font-extrabold mt-20">Gallery</h1>
                 <div className="flex flex-col md:flex-row flex-wrap p-10">
                     {carousel?.map((car) => (

@@ -60,7 +60,7 @@ export function Navbar(){
                 <div  className=" fixed top-24 w-full  h-screen bg-custom-white-menu" style={{zIndex:100}}>
                     <div className="text-blue-900  font-extrabold bg-slate-200 p-6 w-3/4  md:w-1/4 h-screen overflow-y-auto">
                         <ul className=" space-y-10">
-                        <li><Link to={"about-us"}>About Us</Link></li>
+                        <li><Link to={"about-us"} onClick={()=>{setMenuIsOpen(!menuIsOpen)}}>About Us</Link></li>
                         <li className="font-extrabold"><button onClick={handleClickEnt_prog_IsOpen}><a href="/Programs">Entlaq Programs</a> <i className="fa-solid fa-angles-down"></i></button></li>
                                 {
                                     ent_prog_IsOpen?
@@ -71,7 +71,7 @@ export function Navbar(){
                                             </ul>
                                     :null
                                 }
-                            <li><Link to={"Advisory"}>Entlaq Advisory</Link></li>
+                            <li><Link to={"Advisory"} onClick={()=>{setMenuIsOpen(!menuIsOpen)}}>Entlaq Advisory</Link></li>
                             <li className="font-extrabold"><button onClick={handleClickEnt_proj_IsOpen}><a href="/Programs">Projects </a> <i className="fa-solid fa-angles-down"></i></button></li>
                                 {
                                     ent_proj_IsOpen?
