@@ -7,6 +7,7 @@ import { PageOptionDropdown, SectionOptionDropdown } from "../data";
 import useAxiosSendData from "../../../hooks/useFetch";
 
 import JoditEditor from 'jodit-react';
+import MyDropzone from "../components/nD";
 
 
 
@@ -47,7 +48,7 @@ export default function AddCarousel() {
   setFile(event.target.files[0])
  };
  const handleFileChange = (files) => {
-  setCarousel((prevData) => ({...prevData,files}));
+  setCarousel((prevData) => ({...prevData,car_img:files[0]}));
 };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -57,7 +58,7 @@ export default function AddCarousel() {
       formData.append(key,value);
         
     }
-    formData.append('car_img',file)
+    // formData.append('car_img',file)
     try{
         const res = await sendData(ENDPOINT_CAROUSEL,formData,sessionStorage.getItem("token")||"")
         alert(res.msg);
@@ -123,7 +124,7 @@ export default function AddCarousel() {
                                     ) || null}
                                 {
                                     sectionChoosed == 'about_us'?null 
-                                    :<input type="file" onChange={handelFile} name="car_img"/>                                    
+                                    :<MyDropzone onFileChange={handleFileChange} initialImage={``}/>                                    
                                 }
                                 
 

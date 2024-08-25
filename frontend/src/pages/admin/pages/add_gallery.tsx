@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import useAxiosSendData, { useAxiosGetData } from "../../../hooks/useFetch";
 import {Carousel, RportOrGallery} from '../../../types/index'
 import { BACKEND_SERVER, ENDPOINT_CAROUSEL } from "../../../config";
+import MyDropzone from "../components/nD";
 
 
 
@@ -38,7 +39,11 @@ const Report = ()=>{
     const handelFile = (event)=>{
         setFile(event.target.files[0])
        };
+       const handleFileChange = (files) => {
+        // setCarousel((prevData) => ({...prevData,car_img:files[0]}));
+        setFile(files[0])
 
+      };
        const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData();
@@ -94,7 +99,7 @@ const Report = ()=>{
                             }
 
                             {/* {section == 'videos'?<input type="text" onBlur={handleInputVideoUrl} placeholder="video url" className="m-1  border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"/>:null} */}
-                            <input type="file" onChange={handelFile} name="car_img"/>
+                            <MyDropzone onFileChange={handleFileChange} initialImage={``}/>
                             <button type="submit"  className="w-full text-white bg-blue-800 p-5 mt-5 rounded-lg">
                                Add <FontAwesomeIcon icon={faAdd}/>
                             </button>
@@ -126,6 +131,11 @@ const Gallery = ()=>{
     const handelFile = (event)=>{
         setFile(event.target.files[0])
        };
+       const handleFileChange = (files) => {
+        // setCarousel((prevData) => ({...prevData,car_img:files[0]}));
+        setFile(files[0])
+
+      };
 
        const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -156,7 +166,9 @@ const Gallery = ()=>{
                                             carousels?.map((car:Carousel)=>(<option className="w-full"  key={car.id} value={car?.id}>{<div dangerouslySetInnerHTML={{__html:car.car_title}}></div>}</option>))
                                         }
                             </select>
-                            <input type="file" onChange={handelFile} name="car_img"/>
+                            {/* <input type="file" onChange={handelFile} name="car_img"/> */}
+                            <MyDropzone onFileChange={handleFileChange} initialImage={``}/>
+
                                     <button type="submit"  className="w-full text-white bg-blue-800 p-5 mt-5 rounded-lg">
                                     Add <FontAwesomeIcon icon={faAdd}/>
                                     </button>
